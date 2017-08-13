@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ee5b90932d944c05ba936fc84d50196f" Name="Diagram1">
+        <EntityTypeShape EntityType="SekreteryaModel.adre" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.birim" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.iletisim" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.iletisimToKisi" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.iletisimToSirket" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.kisi" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.plan" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.planKisi" Width="1.5" PointX="10.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.planToBirim" Width="1.5" PointX="10.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.planToKisi" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.sehir" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.sirket" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.ulke" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.user" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SekreteryaModel.yetkiLogin" Width="1.5" PointX="3.75" PointY="14" IsExpanded="true" />
+        <AssociationConnector Association="SekreteryaModel.FK_adres_kisi" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_adres_sehir" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_adres_ulke" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_sirket_adres" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_kisi_birim" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_kullanici_birim" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_planToBirim_birim" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_iletisimToKisi_iletisim" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_iletisimToSirket_iletisim" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_iletisimToKisi_kisi" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_iletisimToSirket_sirket" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_kisiler_sirket" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_plan_user" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_planKisi_plan" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_planToBirim_plan" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_Cities_Countries" ManuallyRouted="false" />
+        <AssociationConnector Association="SekreteryaModel.FK_users_yetki" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

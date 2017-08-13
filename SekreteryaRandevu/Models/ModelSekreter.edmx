@@ -1,0 +1,1110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SekreteryaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="adres">
+          <Key>
+            <PropertyRef Name="adresID" />
+          </Key>
+          <Property Name="adresID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adresUlkeID" Type="int" Nullable="false" />
+          <Property Name="adresILID" Type="int" />
+          <Property Name="adresIlce" Type="nvarchar" MaxLength="50" />
+          <Property Name="adresPostaKodu" Type="nvarchar" MaxLength="10" />
+          <Property Name="adresAdres" Type="nvarchar" MaxLength="400" />
+          <Property Name="adresTip" Type="nvarchar" MaxLength="20" />
+          <Property Name="adresKisiID" Type="int" />
+        </EntityType>
+        <EntityType Name="birim">
+          <Key>
+            <PropertyRef Name="birimID" />
+          </Key>
+          <Property Name="birimID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="birimAdi" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="iletisim">
+          <Key>
+            <PropertyRef Name="iletisimID" />
+          </Key>
+          <Property Name="iletisimID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iletisimTip" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="iletisimToKisi">
+          <Key>
+            <PropertyRef Name="itkID" />
+          </Key>
+          <Property Name="itkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iletisimID" Type="int" />
+          <Property Name="kisiID" Type="int" />
+          <Property Name="value" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="iletisimToSirket">
+          <Key>
+            <PropertyRef Name="itsID" />
+          </Key>
+          <Property Name="itsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iletisimID" Type="int" />
+          <Property Name="sirketID" Type="int" />
+          <Property Name="value" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="kisi">
+          <Key>
+            <PropertyRef Name="kisiID" />
+          </Key>
+          <Property Name="kisiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kisiAdi" Type="nvarchar" MaxLength="100" />
+          <Property Name="kisiSoyadi" Type="nvarchar" MaxLength="100" />
+          <Property Name="kisiMeslek" Type="nvarchar" MaxLength="100" />
+          <Property Name="kisiUnvan" Type="nvarchar" MaxLength="50" />
+          <Property Name="kisiKayitTarihi" Type="datetime" />
+          <Property Name="kisiEkBilgi" Type="nvarchar(max)" />
+          <Property Name="kisiSirketID" Type="int" />
+          <Property Name="kisiYonetici" Type="bit" />
+          <Property Name="birimID" Type="int" />
+        </EntityType>
+        <EntityType Name="plan">
+          <Key>
+            <PropertyRef Name="planID" />
+          </Key>
+          <Property Name="planID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="planUzunBilgi" Type="nvarchar(max)" />
+          <Property Name="planKisaBilgi" Type="nvarchar" MaxLength="200" />
+          <Property Name="planTarih" Type="datetime" />
+          <Property Name="planMekan" Type="nvarchar" MaxLength="50" />
+          <Property Name="planisCompleted" Type="bit" />
+          <Property Name="planEkBilgi" Type="nvarchar(max)" />
+          <Property Name="planUserID" Type="int" />
+          <Property Name="planHedefBirimID" Type="int" />
+        </EntityType>
+        <EntityType Name="planKisi">
+          <Key>
+            <PropertyRef Name="pkID" />
+          </Key>
+          <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pKisiAdi" Type="nvarchar" MaxLength="150" />
+          <Property Name="pKisiMail" Type="nvarchar" MaxLength="50" />
+          <Property Name="pKisiTel" Type="nvarchar" MaxLength="20" />
+          <Property Name="pKisiPlanID" Type="int" />
+        </EntityType>
+        <EntityType Name="planToBirim">
+          <Key>
+            <PropertyRef Name="ptbID" />
+          </Key>
+          <Property Name="ptbID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="planBirimID" Type="int" />
+          <Property Name="planPlanID" Type="int" />
+        </EntityType>
+        <EntityType Name="planToKisi">
+          <Key>
+            <PropertyRef Name="ptkID" />
+          </Key>
+          <Property Name="ptkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="planID" Type="int" />
+          <Property Name="kisiID" Type="int" />
+        </EntityType>
+        <EntityType Name="sehir">
+          <Key>
+            <PropertyRef Name="sehirID" />
+          </Key>
+          <Property Name="sehirID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sehirUlkeID" Type="int" Nullable="false" />
+          <Property Name="sehirAdi" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sirket">
+          <Key>
+            <PropertyRef Name="sirketID" />
+          </Key>
+          <Property Name="sirketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sirketAdi" Type="nvarchar" MaxLength="100" />
+          <Property Name="sirketKurulusTarih" Type="datetime" />
+          <Property Name="sirketSektor" Type="nvarchar" MaxLength="50" />
+          <Property Name="sirketAdresID" Type="int" />
+          <Property Name="sirketLokasyon" Type="geography" />
+          <Property Name="sirketSorumluAdiSoyadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="sirketSorumluTel" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ulke">
+          <Key>
+            <PropertyRef Name="ulkeID" />
+          </Key>
+          <Property Name="ulkeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ulkeAdi" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ulkeTelKod" Type="nvarchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="userYetkiID" Type="int" />
+          <Property Name="userAdSoyad" Type="nvarchar" MaxLength="100" />
+          <Property Name="userBirimID" Type="int" />
+        </EntityType>
+        <EntityType Name="yetkiLogin">
+          <Key>
+            <PropertyRef Name="yetkiID" />
+          </Key>
+          <Property Name="yetkiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="yetki" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_adres_kisi">
+          <End Role="kisi" Type="Self.kisi" Multiplicity="0..1" />
+          <End Role="adres" Type="Self.adres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kisi">
+              <PropertyRef Name="kisiID" />
+            </Principal>
+            <Dependent Role="adres">
+              <PropertyRef Name="adresKisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_adres_sehir">
+          <End Role="sehir" Type="Self.sehir" Multiplicity="0..1" />
+          <End Role="adres" Type="Self.adres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sehir">
+              <PropertyRef Name="sehirID" />
+            </Principal>
+            <Dependent Role="adres">
+              <PropertyRef Name="adresILID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_adres_ulke">
+          <End Role="ulke" Type="Self.ulke" Multiplicity="1" />
+          <End Role="adres" Type="Self.adres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ulke">
+              <PropertyRef Name="ulkeID" />
+            </Principal>
+            <Dependent Role="adres">
+              <PropertyRef Name="adresUlkeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cities_Countries">
+          <End Role="ulke" Type="Self.ulke" Multiplicity="1" />
+          <End Role="sehir" Type="Self.sehir" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ulke">
+              <PropertyRef Name="ulkeID" />
+            </Principal>
+            <Dependent Role="sehir">
+              <PropertyRef Name="sehirUlkeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToKisi_iletisim">
+          <End Role="iletisim" Type="Self.iletisim" Multiplicity="0..1" />
+          <End Role="iletisimToKisi" Type="Self.iletisimToKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="iletisim">
+              <PropertyRef Name="iletisimID" />
+            </Principal>
+            <Dependent Role="iletisimToKisi">
+              <PropertyRef Name="iletisimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToKisi_kisi">
+          <End Role="kisi" Type="Self.kisi" Multiplicity="0..1" />
+          <End Role="iletisimToKisi" Type="Self.iletisimToKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kisi">
+              <PropertyRef Name="kisiID" />
+            </Principal>
+            <Dependent Role="iletisimToKisi">
+              <PropertyRef Name="kisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToSirket_iletisim">
+          <End Role="iletisim" Type="Self.iletisim" Multiplicity="0..1" />
+          <End Role="iletisimToSirket" Type="Self.iletisimToSirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="iletisim">
+              <PropertyRef Name="iletisimID" />
+            </Principal>
+            <Dependent Role="iletisimToSirket">
+              <PropertyRef Name="iletisimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToSirket_sirket">
+          <End Role="sirket" Type="Self.sirket" Multiplicity="0..1" />
+          <End Role="iletisimToSirket" Type="Self.iletisimToSirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sirket">
+              <PropertyRef Name="sirketID" />
+            </Principal>
+            <Dependent Role="iletisimToSirket">
+              <PropertyRef Name="sirketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kisi_birim">
+          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
+          <End Role="kisi" Type="Self.kisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="birim">
+              <PropertyRef Name="birimID" />
+            </Principal>
+            <Dependent Role="kisi">
+              <PropertyRef Name="birimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kisiler_sirket">
+          <End Role="sirket" Type="Self.sirket" Multiplicity="0..1" />
+          <End Role="kisi" Type="Self.kisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sirket">
+              <PropertyRef Name="sirketID" />
+            </Principal>
+            <Dependent Role="kisi">
+              <PropertyRef Name="kisiSirketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kullanici_birim">
+          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="birim">
+              <PropertyRef Name="birimID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="userBirimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="plan" Type="Self.plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="planUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_planKisi_plan">
+          <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
+          <End Role="planKisi" Type="Self.planKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="planID" />
+            </Principal>
+            <Dependent Role="planKisi">
+              <PropertyRef Name="pKisiPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_planToBirim_birim">
+          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
+          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="birim">
+              <PropertyRef Name="birimID" />
+            </Principal>
+            <Dependent Role="planToBirim">
+              <PropertyRef Name="planBirimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_planToBirim_plan">
+          <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
+          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="planID" />
+            </Principal>
+            <Dependent Role="planToBirim">
+              <PropertyRef Name="planPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sirket_adres">
+          <End Role="adres" Type="Self.adres" Multiplicity="0..1" />
+          <End Role="sirket" Type="Self.sirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="adres">
+              <PropertyRef Name="adresID" />
+            </Principal>
+            <Dependent Role="sirket">
+              <PropertyRef Name="sirketAdresID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_yetki">
+          <End Role="yetkiLogin" Type="Self.yetkiLogin" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yetkiLogin">
+              <PropertyRef Name="yetkiID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="userYetkiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SekreteryaModelStoreContainer">
+          <EntitySet Name="adres" EntityType="Self.adres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="birim" EntityType="Self.birim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="iletisim" EntityType="Self.iletisim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="iletisimToKisi" EntityType="Self.iletisimToKisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="iletisimToSirket" EntityType="Self.iletisimToSirket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kisi" EntityType="Self.kisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan" EntityType="Self.plan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="planKisi" EntityType="Self.planKisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="planToBirim" EntityType="Self.planToBirim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="planToKisi" EntityType="Self.planToKisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sehir" EntityType="Self.sehir" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sirket" EntityType="Self.sirket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ulke" EntityType="Self.ulke" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="yetkiLogin" EntityType="Self.yetkiLogin" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_adres_kisi" Association="Self.FK_adres_kisi">
+            <End Role="kisi" EntitySet="kisi" />
+            <End Role="adres" EntitySet="adres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_adres_sehir" Association="Self.FK_adres_sehir">
+            <End Role="sehir" EntitySet="sehir" />
+            <End Role="adres" EntitySet="adres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_adres_ulke" Association="Self.FK_adres_ulke">
+            <End Role="ulke" EntitySet="ulke" />
+            <End Role="adres" EntitySet="adres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cities_Countries" Association="Self.FK_Cities_Countries">
+            <End Role="ulke" EntitySet="ulke" />
+            <End Role="sehir" EntitySet="sehir" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToKisi_iletisim" Association="Self.FK_iletisimToKisi_iletisim">
+            <End Role="iletisim" EntitySet="iletisim" />
+            <End Role="iletisimToKisi" EntitySet="iletisimToKisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToKisi_kisi" Association="Self.FK_iletisimToKisi_kisi">
+            <End Role="kisi" EntitySet="kisi" />
+            <End Role="iletisimToKisi" EntitySet="iletisimToKisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToSirket_iletisim" Association="Self.FK_iletisimToSirket_iletisim">
+            <End Role="iletisim" EntitySet="iletisim" />
+            <End Role="iletisimToSirket" EntitySet="iletisimToSirket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToSirket_sirket" Association="Self.FK_iletisimToSirket_sirket">
+            <End Role="sirket" EntitySet="sirket" />
+            <End Role="iletisimToSirket" EntitySet="iletisimToSirket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kisi_birim" Association="Self.FK_kisi_birim">
+            <End Role="birim" EntitySet="birim" />
+            <End Role="kisi" EntitySet="kisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kisiler_sirket" Association="Self.FK_kisiler_sirket">
+            <End Role="sirket" EntitySet="sirket" />
+            <End Role="kisi" EntitySet="kisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kullanici_birim" Association="Self.FK_kullanici_birim">
+            <End Role="birim" EntitySet="birim" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_user" Association="Self.FK_plan_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="plan" EntitySet="plan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_planKisi_plan" Association="Self.FK_planKisi_plan">
+            <End Role="plan" EntitySet="plan" />
+            <End Role="planKisi" EntitySet="planKisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_planToBirim_birim" Association="Self.FK_planToBirim_birim">
+            <End Role="birim" EntitySet="birim" />
+            <End Role="planToBirim" EntitySet="planToBirim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_planToBirim_plan" Association="Self.FK_planToBirim_plan">
+            <End Role="plan" EntitySet="plan" />
+            <End Role="planToBirim" EntitySet="planToBirim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sirket_adres" Association="Self.FK_sirket_adres">
+            <End Role="adres" EntitySet="adres" />
+            <End Role="sirket" EntitySet="sirket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_yetki" Association="Self.FK_users_yetki">
+            <End Role="yetkiLogin" EntitySet="yetkiLogin" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SekreteryaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="adre">
+          <Key>
+            <PropertyRef Name="adresID" />
+          </Key>
+          <Property Name="adresID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adresUlkeID" Type="Int32" Nullable="false" />
+          <Property Name="adresILID" Type="Int32" />
+          <Property Name="adresIlce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adresPostaKodu" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="adresAdres" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="adresTip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="adresKisiID" Type="Int32" />
+          <NavigationProperty Name="kisi" Relationship="Self.FK_adres_kisi" FromRole="adres" ToRole="kisi" />
+          <NavigationProperty Name="sehir" Relationship="Self.FK_adres_sehir" FromRole="adres" ToRole="sehir" />
+          <NavigationProperty Name="ulke" Relationship="Self.FK_adres_ulke" FromRole="adres" ToRole="ulke" />
+          <NavigationProperty Name="sirkets" Relationship="Self.FK_sirket_adres" FromRole="adres" ToRole="sirket" />
+        </EntityType>
+        <EntityType Name="birim">
+          <Key>
+            <PropertyRef Name="birimID" />
+          </Key>
+          <Property Name="birimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="birimAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="kisis" Relationship="Self.FK_kisi_birim" FromRole="birim" ToRole="kisi" />
+          <NavigationProperty Name="users" Relationship="Self.FK_kullanici_birim" FromRole="birim" ToRole="user" />
+          <NavigationProperty Name="planToBirims" Relationship="Self.FK_planToBirim_birim" FromRole="birim" ToRole="planToBirim" />
+        </EntityType>
+        <EntityType Name="iletisim">
+          <Key>
+            <PropertyRef Name="iletisimID" />
+          </Key>
+          <Property Name="iletisimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iletisimTip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="iletisimToKisis" Relationship="Self.FK_iletisimToKisi_iletisim" FromRole="iletisim" ToRole="iletisimToKisi" />
+          <NavigationProperty Name="iletisimToSirkets" Relationship="Self.FK_iletisimToSirket_iletisim" FromRole="iletisim" ToRole="iletisimToSirket" />
+        </EntityType>
+        <EntityType Name="iletisimToKisi">
+          <Key>
+            <PropertyRef Name="itkID" />
+          </Key>
+          <Property Name="itkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iletisimID" Type="Int32" />
+          <Property Name="kisiID" Type="Int32" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="iletisim" Relationship="Self.FK_iletisimToKisi_iletisim" FromRole="iletisimToKisi" ToRole="iletisim" />
+          <NavigationProperty Name="kisi" Relationship="Self.FK_iletisimToKisi_kisi" FromRole="iletisimToKisi" ToRole="kisi" />
+        </EntityType>
+        <EntityType Name="iletisimToSirket">
+          <Key>
+            <PropertyRef Name="itsID" />
+          </Key>
+          <Property Name="itsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iletisimID" Type="Int32" />
+          <Property Name="sirketID" Type="Int32" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="iletisim" Relationship="Self.FK_iletisimToSirket_iletisim" FromRole="iletisimToSirket" ToRole="iletisim" />
+          <NavigationProperty Name="sirket" Relationship="Self.FK_iletisimToSirket_sirket" FromRole="iletisimToSirket" ToRole="sirket" />
+        </EntityType>
+        <EntityType Name="kisi">
+          <Key>
+            <PropertyRef Name="kisiID" />
+          </Key>
+          <Property Name="kisiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kisiAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="kisiSoyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="kisiMeslek" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="kisiUnvan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kisiKayitTarihi" Type="DateTime" Precision="3" />
+          <Property Name="kisiEkBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="kisiSirketID" Type="Int32" />
+          <Property Name="kisiYonetici" Type="Boolean" />
+          <Property Name="birimID" Type="Int32" />
+          <NavigationProperty Name="adres" Relationship="Self.FK_adres_kisi" FromRole="kisi" ToRole="adres" />
+          <NavigationProperty Name="birim" Relationship="Self.FK_kisi_birim" FromRole="kisi" ToRole="birim" />
+          <NavigationProperty Name="iletisimToKisis" Relationship="Self.FK_iletisimToKisi_kisi" FromRole="kisi" ToRole="iletisimToKisi" />
+          <NavigationProperty Name="sirket" Relationship="Self.FK_kisiler_sirket" FromRole="kisi" ToRole="sirket" />
+        </EntityType>
+        <EntityType Name="plan">
+          <Key>
+            <PropertyRef Name="planID" />
+          </Key>
+          <Property Name="planID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="planUzunBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="planKisaBilgi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="planTarih" Type="DateTime" Precision="3" />
+          <Property Name="planMekan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="planisCompleted" Type="Boolean" />
+          <Property Name="planEkBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="planUserID" Type="Int32" />
+          <Property Name="planHedefBirimID" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="Self.FK_plan_user" FromRole="plan" ToRole="user" />
+          <NavigationProperty Name="planKisis" Relationship="Self.FK_planKisi_plan" FromRole="plan" ToRole="planKisi" />
+          <NavigationProperty Name="planToBirims" Relationship="Self.FK_planToBirim_plan" FromRole="plan" ToRole="planToBirim" />
+        </EntityType>
+        <EntityType Name="planKisi">
+          <Key>
+            <PropertyRef Name="pkID" />
+          </Key>
+          <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pKisiAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="pKisiMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pKisiTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="pKisiPlanID" Type="Int32" />
+          <NavigationProperty Name="plan" Relationship="Self.FK_planKisi_plan" FromRole="planKisi" ToRole="plan" />
+        </EntityType>
+        <EntityType Name="planToBirim">
+          <Key>
+            <PropertyRef Name="ptbID" />
+          </Key>
+          <Property Name="ptbID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="planBirimID" Type="Int32" />
+          <Property Name="planPlanID" Type="Int32" />
+          <NavigationProperty Name="birim" Relationship="Self.FK_planToBirim_birim" FromRole="planToBirim" ToRole="birim" />
+          <NavigationProperty Name="plan" Relationship="Self.FK_planToBirim_plan" FromRole="planToBirim" ToRole="plan" />
+        </EntityType>
+        <EntityType Name="planToKisi">
+          <Key>
+            <PropertyRef Name="ptkID" />
+          </Key>
+          <Property Name="ptkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="planID" Type="Int32" />
+          <Property Name="kisiID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sehir">
+          <Key>
+            <PropertyRef Name="sehirID" />
+          </Key>
+          <Property Name="sehirID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sehirUlkeID" Type="Int32" Nullable="false" />
+          <Property Name="sehirAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="adres" Relationship="Self.FK_adres_sehir" FromRole="sehir" ToRole="adres" />
+          <NavigationProperty Name="ulke" Relationship="Self.FK_Cities_Countries" FromRole="sehir" ToRole="ulke" />
+        </EntityType>
+        <EntityType Name="sirket">
+          <Key>
+            <PropertyRef Name="sirketID" />
+          </Key>
+          <Property Name="sirketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sirketAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sirketKurulusTarih" Type="DateTime" Precision="3" />
+          <Property Name="sirketSektor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sirketAdresID" Type="Int32" />
+          <Property Name="sirketLokasyon" Type="Geography" />
+          <Property Name="sirketSorumluAdiSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sirketSorumluTel" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="adre" Relationship="Self.FK_sirket_adres" FromRole="sirket" ToRole="adres" />
+          <NavigationProperty Name="iletisimToSirkets" Relationship="Self.FK_iletisimToSirket_sirket" FromRole="sirket" ToRole="iletisimToSirket" />
+          <NavigationProperty Name="kisis" Relationship="Self.FK_kisiler_sirket" FromRole="sirket" ToRole="kisi" />
+        </EntityType>
+        <EntityType Name="ulke">
+          <Key>
+            <PropertyRef Name="ulkeID" />
+          </Key>
+          <Property Name="ulkeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ulkeAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ulkeTelKod" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="adres" Relationship="Self.FK_adres_ulke" FromRole="ulke" ToRole="adres" />
+          <NavigationProperty Name="sehirs" Relationship="Self.FK_Cities_Countries" FromRole="ulke" ToRole="sehir" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userYetkiID" Type="Int32" />
+          <Property Name="userAdSoyad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="userBirimID" Type="Int32" />
+          <NavigationProperty Name="birim" Relationship="Self.FK_kullanici_birim" FromRole="user" ToRole="birim" />
+          <NavigationProperty Name="plans" Relationship="Self.FK_plan_user" FromRole="user" ToRole="plan" />
+          <NavigationProperty Name="yetkiLogin" Relationship="Self.FK_users_yetki" FromRole="user" ToRole="yetkiLogin" />
+        </EntityType>
+        <EntityType Name="yetkiLogin">
+          <Key>
+            <PropertyRef Name="yetkiID" />
+          </Key>
+          <Property Name="yetkiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yetki" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="users" Relationship="Self.FK_users_yetki" FromRole="yetkiLogin" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_adres_kisi">
+          <End Role="kisi" Type="Self.kisi" Multiplicity="0..1" />
+          <End Role="adres" Type="Self.adre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kisi">
+              <PropertyRef Name="kisiID" />
+            </Principal>
+            <Dependent Role="adres">
+              <PropertyRef Name="adresKisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_adres_sehir">
+          <End Role="sehir" Type="Self.sehir" Multiplicity="0..1" />
+          <End Role="adres" Type="Self.adre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sehir">
+              <PropertyRef Name="sehirID" />
+            </Principal>
+            <Dependent Role="adres">
+              <PropertyRef Name="adresILID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_adres_ulke">
+          <End Role="ulke" Type="Self.ulke" Multiplicity="1" />
+          <End Role="adres" Type="Self.adre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ulke">
+              <PropertyRef Name="ulkeID" />
+            </Principal>
+            <Dependent Role="adres">
+              <PropertyRef Name="adresUlkeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sirket_adres">
+          <End Role="adres" Type="Self.adre" Multiplicity="0..1" />
+          <End Role="sirket" Type="Self.sirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="adres">
+              <PropertyRef Name="adresID" />
+            </Principal>
+            <Dependent Role="sirket">
+              <PropertyRef Name="sirketAdresID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kisi_birim">
+          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
+          <End Role="kisi" Type="Self.kisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="birim">
+              <PropertyRef Name="birimID" />
+            </Principal>
+            <Dependent Role="kisi">
+              <PropertyRef Name="birimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kullanici_birim">
+          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="birim">
+              <PropertyRef Name="birimID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="userBirimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_planToBirim_birim">
+          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
+          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="birim">
+              <PropertyRef Name="birimID" />
+            </Principal>
+            <Dependent Role="planToBirim">
+              <PropertyRef Name="planBirimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToKisi_iletisim">
+          <End Role="iletisim" Type="Self.iletisim" Multiplicity="0..1" />
+          <End Role="iletisimToKisi" Type="Self.iletisimToKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="iletisim">
+              <PropertyRef Name="iletisimID" />
+            </Principal>
+            <Dependent Role="iletisimToKisi">
+              <PropertyRef Name="iletisimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToSirket_iletisim">
+          <End Role="iletisim" Type="Self.iletisim" Multiplicity="0..1" />
+          <End Role="iletisimToSirket" Type="Self.iletisimToSirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="iletisim">
+              <PropertyRef Name="iletisimID" />
+            </Principal>
+            <Dependent Role="iletisimToSirket">
+              <PropertyRef Name="iletisimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToKisi_kisi">
+          <End Role="kisi" Type="Self.kisi" Multiplicity="0..1" />
+          <End Role="iletisimToKisi" Type="Self.iletisimToKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kisi">
+              <PropertyRef Name="kisiID" />
+            </Principal>
+            <Dependent Role="iletisimToKisi">
+              <PropertyRef Name="kisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_iletisimToSirket_sirket">
+          <End Role="sirket" Type="Self.sirket" Multiplicity="0..1" />
+          <End Role="iletisimToSirket" Type="Self.iletisimToSirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sirket">
+              <PropertyRef Name="sirketID" />
+            </Principal>
+            <Dependent Role="iletisimToSirket">
+              <PropertyRef Name="sirketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kisiler_sirket">
+          <End Role="sirket" Type="Self.sirket" Multiplicity="0..1" />
+          <End Role="kisi" Type="Self.kisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sirket">
+              <PropertyRef Name="sirketID" />
+            </Principal>
+            <Dependent Role="kisi">
+              <PropertyRef Name="kisiSirketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="plan" Type="Self.plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="planUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_planKisi_plan">
+          <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
+          <End Role="planKisi" Type="Self.planKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="planID" />
+            </Principal>
+            <Dependent Role="planKisi">
+              <PropertyRef Name="pKisiPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_planToBirim_plan">
+          <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
+          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="planID" />
+            </Principal>
+            <Dependent Role="planToBirim">
+              <PropertyRef Name="planPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cities_Countries">
+          <End Role="ulke" Type="Self.ulke" Multiplicity="1" />
+          <End Role="sehir" Type="Self.sehir" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ulke">
+              <PropertyRef Name="ulkeID" />
+            </Principal>
+            <Dependent Role="sehir">
+              <PropertyRef Name="sehirUlkeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_yetki">
+          <End Role="yetkiLogin" Type="Self.yetkiLogin" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yetkiLogin">
+              <PropertyRef Name="yetkiID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="userYetkiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SekreteryaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="adres" EntityType="Self.adre" />
+          <EntitySet Name="birims" EntityType="Self.birim" />
+          <EntitySet Name="iletisims" EntityType="Self.iletisim" />
+          <EntitySet Name="iletisimToKisis" EntityType="Self.iletisimToKisi" />
+          <EntitySet Name="iletisimToSirkets" EntityType="Self.iletisimToSirket" />
+          <EntitySet Name="kisis" EntityType="Self.kisi" />
+          <EntitySet Name="plans" EntityType="Self.plan" />
+          <EntitySet Name="planKisis" EntityType="Self.planKisi" />
+          <EntitySet Name="planToBirims" EntityType="Self.planToBirim" />
+          <EntitySet Name="planToKisis" EntityType="Self.planToKisi" />
+          <EntitySet Name="sehirs" EntityType="Self.sehir" />
+          <EntitySet Name="sirkets" EntityType="Self.sirket" />
+          <EntitySet Name="ulkes" EntityType="Self.ulke" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="yetkiLogins" EntityType="Self.yetkiLogin" />
+          <AssociationSet Name="FK_adres_kisi" Association="Self.FK_adres_kisi">
+            <End Role="kisi" EntitySet="kisis" />
+            <End Role="adres" EntitySet="adres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_adres_sehir" Association="Self.FK_adres_sehir">
+            <End Role="sehir" EntitySet="sehirs" />
+            <End Role="adres" EntitySet="adres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_adres_ulke" Association="Self.FK_adres_ulke">
+            <End Role="ulke" EntitySet="ulkes" />
+            <End Role="adres" EntitySet="adres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sirket_adres" Association="Self.FK_sirket_adres">
+            <End Role="adres" EntitySet="adres" />
+            <End Role="sirket" EntitySet="sirkets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kisi_birim" Association="Self.FK_kisi_birim">
+            <End Role="birim" EntitySet="birims" />
+            <End Role="kisi" EntitySet="kisis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kullanici_birim" Association="Self.FK_kullanici_birim">
+            <End Role="birim" EntitySet="birims" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_planToBirim_birim" Association="Self.FK_planToBirim_birim">
+            <End Role="birim" EntitySet="birims" />
+            <End Role="planToBirim" EntitySet="planToBirims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToKisi_iletisim" Association="Self.FK_iletisimToKisi_iletisim">
+            <End Role="iletisim" EntitySet="iletisims" />
+            <End Role="iletisimToKisi" EntitySet="iletisimToKisis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToSirket_iletisim" Association="Self.FK_iletisimToSirket_iletisim">
+            <End Role="iletisim" EntitySet="iletisims" />
+            <End Role="iletisimToSirket" EntitySet="iletisimToSirkets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToKisi_kisi" Association="Self.FK_iletisimToKisi_kisi">
+            <End Role="kisi" EntitySet="kisis" />
+            <End Role="iletisimToKisi" EntitySet="iletisimToKisis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_iletisimToSirket_sirket" Association="Self.FK_iletisimToSirket_sirket">
+            <End Role="sirket" EntitySet="sirkets" />
+            <End Role="iletisimToSirket" EntitySet="iletisimToSirkets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kisiler_sirket" Association="Self.FK_kisiler_sirket">
+            <End Role="sirket" EntitySet="sirkets" />
+            <End Role="kisi" EntitySet="kisis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_user" Association="Self.FK_plan_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_planKisi_plan" Association="Self.FK_planKisi_plan">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="planKisi" EntitySet="planKisis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_planToBirim_plan" Association="Self.FK_planToBirim_plan">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="planToBirim" EntitySet="planToBirims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cities_Countries" Association="Self.FK_Cities_Countries">
+            <End Role="ulke" EntitySet="ulkes" />
+            <End Role="sehir" EntitySet="sehirs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_yetki" Association="Self.FK_users_yetki">
+            <End Role="yetkiLogin" EntitySet="yetkiLogins" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SekreteryaModelStoreContainer" CdmEntityContainer="SekreteryaEntities">
+          <EntitySetMapping Name="adres">
+            <EntityTypeMapping TypeName="SekreteryaModel.adre">
+              <MappingFragment StoreEntitySet="adres">
+                <ScalarProperty Name="adresID" ColumnName="adresID" />
+                <ScalarProperty Name="adresUlkeID" ColumnName="adresUlkeID" />
+                <ScalarProperty Name="adresILID" ColumnName="adresILID" />
+                <ScalarProperty Name="adresIlce" ColumnName="adresIlce" />
+                <ScalarProperty Name="adresPostaKodu" ColumnName="adresPostaKodu" />
+                <ScalarProperty Name="adresAdres" ColumnName="adresAdres" />
+                <ScalarProperty Name="adresTip" ColumnName="adresTip" />
+                <ScalarProperty Name="adresKisiID" ColumnName="adresKisiID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="birims">
+            <EntityTypeMapping TypeName="SekreteryaModel.birim">
+              <MappingFragment StoreEntitySet="birim">
+                <ScalarProperty Name="birimID" ColumnName="birimID" />
+                <ScalarProperty Name="birimAdi" ColumnName="birimAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="iletisims">
+            <EntityTypeMapping TypeName="SekreteryaModel.iletisim">
+              <MappingFragment StoreEntitySet="iletisim">
+                <ScalarProperty Name="iletisimID" ColumnName="iletisimID" />
+                <ScalarProperty Name="iletisimTip" ColumnName="iletisimTip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="iletisimToKisis">
+            <EntityTypeMapping TypeName="SekreteryaModel.iletisimToKisi">
+              <MappingFragment StoreEntitySet="iletisimToKisi">
+                <ScalarProperty Name="itkID" ColumnName="itkID" />
+                <ScalarProperty Name="iletisimID" ColumnName="iletisimID" />
+                <ScalarProperty Name="kisiID" ColumnName="kisiID" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="iletisimToSirkets">
+            <EntityTypeMapping TypeName="SekreteryaModel.iletisimToSirket">
+              <MappingFragment StoreEntitySet="iletisimToSirket">
+                <ScalarProperty Name="itsID" ColumnName="itsID" />
+                <ScalarProperty Name="iletisimID" ColumnName="iletisimID" />
+                <ScalarProperty Name="sirketID" ColumnName="sirketID" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kisis">
+            <EntityTypeMapping TypeName="SekreteryaModel.kisi">
+              <MappingFragment StoreEntitySet="kisi">
+                <ScalarProperty Name="kisiID" ColumnName="kisiID" />
+                <ScalarProperty Name="kisiAdi" ColumnName="kisiAdi" />
+                <ScalarProperty Name="kisiSoyadi" ColumnName="kisiSoyadi" />
+                <ScalarProperty Name="kisiMeslek" ColumnName="kisiMeslek" />
+                <ScalarProperty Name="kisiUnvan" ColumnName="kisiUnvan" />
+                <ScalarProperty Name="kisiKayitTarihi" ColumnName="kisiKayitTarihi" />
+                <ScalarProperty Name="kisiEkBilgi" ColumnName="kisiEkBilgi" />
+                <ScalarProperty Name="kisiSirketID" ColumnName="kisiSirketID" />
+                <ScalarProperty Name="kisiYonetici" ColumnName="kisiYonetici" />
+                <ScalarProperty Name="birimID" ColumnName="birimID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plans">
+            <EntityTypeMapping TypeName="SekreteryaModel.plan">
+              <MappingFragment StoreEntitySet="plan">
+                <ScalarProperty Name="planID" ColumnName="planID" />
+                <ScalarProperty Name="planUzunBilgi" ColumnName="planUzunBilgi" />
+                <ScalarProperty Name="planKisaBilgi" ColumnName="planKisaBilgi" />
+                <ScalarProperty Name="planTarih" ColumnName="planTarih" />
+                <ScalarProperty Name="planMekan" ColumnName="planMekan" />
+                <ScalarProperty Name="planisCompleted" ColumnName="planisCompleted" />
+                <ScalarProperty Name="planEkBilgi" ColumnName="planEkBilgi" />
+                <ScalarProperty Name="planUserID" ColumnName="planUserID" />
+                <ScalarProperty Name="planHedefBirimID" ColumnName="planHedefBirimID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="planKisis">
+            <EntityTypeMapping TypeName="SekreteryaModel.planKisi">
+              <MappingFragment StoreEntitySet="planKisi">
+                <ScalarProperty Name="pkID" ColumnName="pkID" />
+                <ScalarProperty Name="pKisiAdi" ColumnName="pKisiAdi" />
+                <ScalarProperty Name="pKisiMail" ColumnName="pKisiMail" />
+                <ScalarProperty Name="pKisiTel" ColumnName="pKisiTel" />
+                <ScalarProperty Name="pKisiPlanID" ColumnName="pKisiPlanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="planToBirims">
+            <EntityTypeMapping TypeName="SekreteryaModel.planToBirim">
+              <MappingFragment StoreEntitySet="planToBirim">
+                <ScalarProperty Name="ptbID" ColumnName="ptbID" />
+                <ScalarProperty Name="planBirimID" ColumnName="planBirimID" />
+                <ScalarProperty Name="planPlanID" ColumnName="planPlanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="planToKisis">
+            <EntityTypeMapping TypeName="SekreteryaModel.planToKisi">
+              <MappingFragment StoreEntitySet="planToKisi">
+                <ScalarProperty Name="ptkID" ColumnName="ptkID" />
+                <ScalarProperty Name="planID" ColumnName="planID" />
+                <ScalarProperty Name="kisiID" ColumnName="kisiID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sehirs">
+            <EntityTypeMapping TypeName="SekreteryaModel.sehir">
+              <MappingFragment StoreEntitySet="sehir">
+                <ScalarProperty Name="sehirID" ColumnName="sehirID" />
+                <ScalarProperty Name="sehirUlkeID" ColumnName="sehirUlkeID" />
+                <ScalarProperty Name="sehirAdi" ColumnName="sehirAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sirkets">
+            <EntityTypeMapping TypeName="SekreteryaModel.sirket">
+              <MappingFragment StoreEntitySet="sirket">
+                <ScalarProperty Name="sirketID" ColumnName="sirketID" />
+                <ScalarProperty Name="sirketAdi" ColumnName="sirketAdi" />
+                <ScalarProperty Name="sirketKurulusTarih" ColumnName="sirketKurulusTarih" />
+                <ScalarProperty Name="sirketSektor" ColumnName="sirketSektor" />
+                <ScalarProperty Name="sirketAdresID" ColumnName="sirketAdresID" />
+                <ScalarProperty Name="sirketLokasyon" ColumnName="sirketLokasyon" />
+                <ScalarProperty Name="sirketSorumluAdiSoyadi" ColumnName="sirketSorumluAdiSoyadi" />
+                <ScalarProperty Name="sirketSorumluTel" ColumnName="sirketSorumluTel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ulkes">
+            <EntityTypeMapping TypeName="SekreteryaModel.ulke">
+              <MappingFragment StoreEntitySet="ulke">
+                <ScalarProperty Name="ulkeID" ColumnName="ulkeID" />
+                <ScalarProperty Name="ulkeAdi" ColumnName="ulkeAdi" />
+                <ScalarProperty Name="ulkeTelKod" ColumnName="ulkeTelKod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="SekreteryaModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userYetkiID" ColumnName="userYetkiID" />
+                <ScalarProperty Name="userAdSoyad" ColumnName="userAdSoyad" />
+                <ScalarProperty Name="userBirimID" ColumnName="userBirimID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="yetkiLogins">
+            <EntityTypeMapping TypeName="SekreteryaModel.yetkiLogin">
+              <MappingFragment StoreEntitySet="yetkiLogin">
+                <ScalarProperty Name="yetkiID" ColumnName="yetkiID" />
+                <ScalarProperty Name="yetki" ColumnName="yetki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
