@@ -11,7 +11,9 @@
 
 <h2>Olustur</h2>
 
-<form method="post" action="/Kisi/Olustur">
+@*<form method="post" action="/Kisi/Olustur">*@
+@using (Html.BeginForm())
+{
     <div class="form-horizontal">
         <div class="form-group">
             <label class="col-md-2"> Ad : </label>
@@ -35,7 +37,7 @@
                 <option selected value="0">ŞİRKET SEÇİNİZ</option>
                 @foreach (var item in s)
                 {
-                <option value="@item.sirketID">@item.sirketAdi</option>
+                    <option value="@item.sirketID">@item.sirketAdi</option>
                 }
             </select>
         </div>
@@ -45,7 +47,7 @@
                 <option selected value="0">BİRİM SEÇİNİZ</option>
                 @foreach (var item in b)
                 {
-                <option value="@item.birimID">@item.birimAdi</option>
+                    <option value="@item.birimID">@item.birimAdi</option>
                 }
             </select>
         </div>
@@ -64,25 +66,46 @@
         <div id="icep">
             <div id="cep" class="form-group">
                 <label class="col-md-2">Cep Telefonu : </label>
-                <input type="tel" name="value" />
+                <input type="tel" name="cep" />
                 <button id="eklecep" name="cep" type="button">+Cep</button>
             </div>
         </div>
         <div id="iis">
             <div id="is" class="form-group">
                 <label class="col-md-2">İş Telefonu : </label>
-                <input type="tel" name="value" />
+                <input type="tel" name="is" />
                 <button id="ekleis" name="is" type="button">+İş</button>
             </div>
         </div>
         <div id="iev">
             <div id="ev" class="form-group">
                 <label class="col-md-2">Ev Telefonu : </label>
-                <input type="tel" name="value" />
+                <input type="tel" name="ev" />
                 <button id="ekleev" name="ev" type="button">+Ev</button>
             </div>
-        </div>        
+        </div>
+        <div id="imail">
+            <div id="mail" class="form-group">
+                <label class="col-md-2">E-Mail Telefonu : </label>
+                <input type="email" name="mail" />
+                <button id="eklemail" name="ev" type="button">+Mail</button>
+            </div>
+        </div>
+        <div id="ifax">
+            <div id="ev" class="form-group">
+                <label class="col-md-2">Fax Site : </label>
+                <input type="text" name="fax" />
+                <button id="eklefax" name="ev" type="button">+Fax</button>
+            </div>
+        </div>
+        <div id="isite">
+            <div id="site" class="form-group">
+                <label class="col-md-2">Web Site : </label>
+                <input type="text" name="site" />
+                <button id="eklesite" name="ev" type="button">+Web Site</button>
+            </div>
+        </div>
     </div>
-    <input type="submit" id="btn"/>
-</form>
+    <input type="submit" id="btn" />
+}
 

@@ -24,8 +24,8 @@ namespace SekreteryaRandevu.Controllers
             {
                 return RedirectToAction("Liste");
             }
-            var detayKisi = db.kisis.Where(k => k.kisiID == id).SingleOrDefault();            
-            if(detayKisi==null)
+            var detayKisi = db.kisis.Where(k => k.kisiID == id).SingleOrDefault();
+            if (detayKisi == null)
             {
                 return RedirectToAction("Liste");
             }
@@ -43,13 +43,68 @@ namespace SekreteryaRandevu.Controllers
 
         // POST: Kisi/Create
         [HttpPost]
-        public ActionResult Olustur(FormCollection collection)
+        public ActionResult Olustur(FormCollection collection, kisi kisi)
         {
+            List<iletisimToKisi> i = new List<iletisimToKisi>();
+            //iletisimToKisi data = new iletisimToKisi();
+            kisi k = new kisi();
+
+            k.kisiAdi = collection["kisiAdi"];
+            //foreach (var item in collection["cep"])
+            //{
+            //    k.iletisimToKisis.Add(item);
+            //}
+            var a = collection.GetValues("cep");
+
             try
             {
                 // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                foreach (var item in collection.GetValues("cep"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 1;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("is"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 6;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("ev"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 4;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("mail"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 11;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("fax"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 9;
+                    i.Add(data);    
+                }
+                foreach (var item in collection.GetValues("site"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 12;
+                    i.Add(data);
+                }
+                kisi.iletisimToKisis = i;                
+                db.kisis.Add(kisi);
+                db.SaveChanges();
+                return RedirectToAction("Liste");
             }
             catch
             {
