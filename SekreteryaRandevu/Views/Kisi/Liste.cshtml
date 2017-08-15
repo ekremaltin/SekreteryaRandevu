@@ -1,0 +1,29 @@
+﻿@using SekreteryaRandevu.Models
+@model List<kisi>
+
+@{
+    ViewBag.Title = "Kişiler";
+}
+
+<h2>Kayıtlı Kişiler</h2>
+<div><a href="/Kisi/Olustur" class="glyphicon glyphicon-plus">Yeni Kişi Oluştur</a> </div>
+<div class="row">
+    <div class="col-md-2">Ad</div>
+    <div class="col-md-2">Soyad</div>
+    <div class="col-md-2">Ünvan</div>
+    <div class="col-md-2">Meslek</div>
+</div>
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-2">@item.kisiAdi</div>
+        <div class="col-md-2">@item.kisiSoyadi</div>
+        <div class="col-md-2">@item.kisiUnvan</div>
+        <div class="col-md-2">@item.kisiMeslek</div>
+        <a href="/Kisi/Detay/@item.kisiID" class="glyphicon glyphicon-list-alt">Detay</a>&nbsp;
+        <a href="/Kisi/Duzenle/@item.kisiID" class="glyphicon glyphicon-pencil">Düzenle</a>&nbsp;
+        <a href="/Kisi/Sil/@item.kisiID" class="glyphicon glyphicon-remove">Sil</a>
+    </div>
+}
+
+

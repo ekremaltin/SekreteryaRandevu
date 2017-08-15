@@ -1,0 +1,32 @@
+﻿$("#eklecep").click(function (e) {
+        var y = '<div id="row' + (i++) + '" class="form-group">' +
+            '<label class="col-md-2">Cep Telefonu : </label>' +
+            '<input type="tel" name="value' + (i++) + '" />' +
+            '<button id="' + (i++) + '" type="button" class="btn-danger">s</button>' +
+        '</div>'
+        $("#icep").append(y);
+    })
+    $("#ekleis").click(function (e) {
+        var s = '<div id="row' + (k++) + '" class="form-group">' +
+            '<label class="col-md-2">İs Telefonu : </label>' +
+            '<input type="tel" name="value' + (k++) + '" />' +
+            '<button id="' + (k++) + '"type="button"  class="btn-danger">xSil</button>' +
+        '</div>'
+        $("#iis").append(s);
+    })
+    $("#ekleev").click(function (e) {
+        var d = '<div id="row' + (m++) + '" class="form-group">' +
+       '<label class="col-md-2">Ev Telefonu : </label>' +
+       '<input type="tel" name="value' + (m++) + '" />' +
+       '<button id="' + (m++) + '"  name="sil" type="button class="btn-danger">xSil</button>' +
+   '</div>'
+        $("#iev").append(d);
+    })
+    $("#delete").click(function () {
+        $(this).append('div');
+    })
+    $(document).on('click', '.btn-danger', function () {
+        var btn_id = $(this).attr('id');
+        $('#row' + btn_id + '').remove();
+
+    })

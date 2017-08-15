@@ -1,0 +1,39 @@
+﻿@using SekreteryaRandevu.Models
+@model kisi
+@{
+    ViewBag.Title = "Kişi Detayı";
+}
+
+<h2>
+    @Model.kisiAdi @Model.kisiSoyadi <span>Kaydının Detaylı Bilgisi</span>
+</h2>
+
+<ul class="list-group">
+    <li class="list-group-item"><label>AD :</label>@Model.kisiAdi</li>
+    <li class="list-group-item"><label>SOYAD :</label>@Model.kisiSoyadi</li>
+    <li class="list-group-item"><label>MESLEK :</label>@Model.kisiMeslek</li>
+    <li class="list-group-item"><label>UNVAN :</label>@Model.kisiUnvan</li>
+    <li class="list-group-item">
+        <label>ŞİRKET :</label>
+        @if (Model.sirket == null)
+        { <span>Şirket Bilgisi Yok</span> }
+        else
+        {
+            <span>@Model.sirket.sirketAdi</span>
+        }
+    </li>
+    <li class="list-group-item">
+        <label>BİRİM</label>
+        @if (Model.birim == null)
+        { <span>Birim Bilgisi Yok</span> }
+        else
+        {
+            <span>@Model.birim.birimAdi</span>
+        }
+    </li>
+    @foreach (var item in Model.iletisimToKisis)
+    {
+        <li>@item.iletisim.iletisimTip</li>
+        <li>@item.value</li>
+    }
+</ul>

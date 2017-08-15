@@ -1,0 +1,88 @@
+﻿@using SekreteryaRandevu.Models
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jq.js"></script>
+@{
+    ViewBag.Title = "Olustur";
+    List<sirket> s = ViewBag.sirketler;
+    List<birim> b = ViewBag.birimler;
+    List<iletisim> i = ViewBag.iletisimTipler;
+}
+
+
+<h2>Olustur</h2>
+
+<form method="post" action="/Kisi/Olustur">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-2"> Ad : </label>
+            <input type="text" name="kisiAdi" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2"> Soyad : </label>
+            <input type="text" name="kisiSoyadi" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2"> Meslek : </label>
+            <input type="text" name="kisiMeslek" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2"> Ünvan : </label>
+            <input type="text" name="kisiUnvan" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2"> Şirket : </label>
+            <select>
+                <option selected value="0">ŞİRKET SEÇİNİZ</option>
+                @foreach (var item in s)
+                {
+                <option value="@item.sirketID">@item.sirketAdi</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2"> Birim : </label>
+            <select>
+                <option selected value="0">BİRİM SEÇİNİZ</option>
+                @foreach (var item in b)
+                {
+                <option value="@item.birimID">@item.birimAdi</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2"> Yönetici mi? : </label>
+            <input type="radio" name="kisiYonetici" value=true /> Evet
+            <input type="radio" name="kisiYonetici" value=false checked /> Hayır
+        </div>
+        <div class="form-group">
+            <label class="col-md-2"> Ek Bilgi : </label>
+            <input type="text" name="kisiEkBilgi" />
+        </div>
+
+    </div>
+    <div id="iletisim" class="form-horizontal">
+        <div id="icep">
+            <div id="cep" class="form-group">
+                <label class="col-md-2">Cep Telefonu : </label>
+                <input type="tel" name="value" />
+                <button id="eklecep" name="cep" type="button">+Cep</button>
+            </div>
+        </div>
+        <div id="iis">
+            <div id="is" class="form-group">
+                <label class="col-md-2">İş Telefonu : </label>
+                <input type="tel" name="value" />
+                <button id="ekleis" name="is" type="button">+İş</button>
+            </div>
+        </div>
+        <div id="iev">
+            <div id="ev" class="form-group">
+                <label class="col-md-2">Ev Telefonu : </label>
+                <input type="tel" name="value" />
+                <button id="ekleev" name="ev" type="button">+Ev</button>
+            </div>
+        </div>        
+    </div>
+    <input type="submit" id="btn"/>
+</form>
+
