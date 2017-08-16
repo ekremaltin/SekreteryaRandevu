@@ -38,22 +38,27 @@ namespace SekreteryaRandevu.Controllers
             ViewBag.sirketler = db.sirkets.ToList();
             ViewBag.birimler = db.birims.ToList();
             ViewBag.iletisimTipler = db.iletisims.ToList();
+            ViewBag.adresUlkeID = new SelectList(db.ulkes, "ulkeID", "ulkeAdi");
             return View();
+        }
+        
+        public JsonResult ilList(int id)
+        {
+            List<sehir> s = db.sehirs.Where(m => m.sehirUlkeID == id).OrderBy(m => m.sehirAdi).ToList();
+            var secimList = new SelectList(s, "sehirID", "sehirAdi");            
+            return Json(secimList, JsonRequestBehavior.AllowGet); 
         }
 
         // POST: Kisi/Create
         [HttpPost]
-        public ActionResult Olustur(FormCollection collection, kisi kisi)
+        public ActionResult Olustur(FormCollection collection, kisi kisi,adre adre)
         {
             List<iletisimToKisi> i = new List<iletisimToKisi>();
-            //iletisimToKisi data = new iletisimToKisi();
+            List<adre> ad = new List<adre>();
+            ad.Add(adre);
             kisi k = new kisi();
 
             k.kisiAdi = collection["kisiAdi"];
-            //foreach (var item in collection["cep"])
-            //{
-            //    k.iletisimToKisis.Add(item);
-            //}
             var a = collection.GetValues("cep");
 
             try
@@ -92,7 +97,7 @@ namespace SekreteryaRandevu.Controllers
                     iletisimToKisi data = new iletisimToKisi();
                     data.value = item.ToString();
                     data.iletisimID = 9;
-                    i.Add(data);    
+                    i.Add(data);
                 }
                 foreach (var item in collection.GetValues("site"))
                 {
@@ -101,7 +106,8 @@ namespace SekreteryaRandevu.Controllers
                     data.iletisimID = 12;
                     i.Add(data);
                 }
-                kisi.iletisimToKisis = i;                
+                kisi.iletisimToKisis = i;
+                kisi.adres = ad;
                 db.kisis.Add(kisi);
                 db.SaveChanges();
                 return RedirectToAction("Liste");
@@ -115,6 +121,9 @@ namespace SekreteryaRandevu.Controllers
         // GET: Kisi/Edit/5
         public ActionResult Duzenle(int id)
         {
+            kisi kisi = db.kisis.Where(p => p.kisiID == id).SingleOrDefault();
+            List<iletisimToKisi> kisiİletisim = db.iletisimToKisis.Where(m => m.kisiID == id).ToList();
+            List<adre> kisiAdres = db.adres.Where(n => n.adresKisiID == id).ToList();            
             return View();
         }
 

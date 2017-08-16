@@ -225,7 +225,8 @@
       <DependentUpon>ModelSekreter.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jq.js" />
+    <Content Include="Scripts\cascadingDDList.js" />
+    <Content Include="Scripts\dinamik.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

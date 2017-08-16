@@ -1,6 +1,4 @@
 ﻿@using SekreteryaRandevu.Models
-<script src="~/Scripts/jquery-1.10.2.js"></script>
-<script src="~/Scripts/jq.js"></script>
 @{
     ViewBag.Title = "Olustur";
     List<sirket> s = ViewBag.sirketler;
@@ -33,21 +31,21 @@
         </div>
         <div class="form-group">
             <label class="col-md-2"> Şirket : </label>
-            <select>
+            <select name="kisiSirketID">
                 <option selected value="0">ŞİRKET SEÇİNİZ</option>
                 @foreach (var item in s)
                 {
-                    <option value="@item.sirketID">@item.sirketAdi</option>
+                <option value="@item.sirketID">@item.sirketAdi</option>
                 }
             </select>
         </div>
         <div class="form-group">
             <label class="col-md-2"> Birim : </label>
-            <select>
+            <select name="kisiBirimID">
                 <option selected value="0">BİRİM SEÇİNİZ</option>
                 @foreach (var item in b)
                 {
-                    <option value="@item.birimID">@item.birimAdi</option>
+                <option value="@item.birimID">@item.birimAdi</option>
                 }
             </select>
         </div>
@@ -106,6 +104,45 @@
             </div>
         </div>
     </div>
+    <div id="adresler" class="form-horizontal">
+        <address id="adres">
+            <div id="ulke" class="form-group">
+                <label>Ülke :</label>
+                @Html.DropDownList("adresUlkeID", null, "Ulke Seçiniz", new { @class = "form-control" })
+            </div>
+            <div id="sehir" class="form-group">
+                <label>İl :</label>
+                <select id="adresILID" name="adresILID" class = "form-control">
+                    <option selected >İl Seçiniz:</option>
+                </select>
+            </div>
+            <div id="ilce">
+                <label>İlçe :</label>
+                <input type="text" name="adresIlce" />
+            </div>
+            <div id="postakodu">
+                <label>Posta Kodu :</label>
+                <input type="text" name="adresPostaKodu" />
+            </div>
+            <div id="adresgenis">
+                <label>Adres Kodu :</label>
+                <input type="text" name="adresAdres" />
+            </div>
+            <div id="adresTip">
+                <select name="adresTip">
+                    <option value="İkamet">İkamet Adresi</option>
+                    <option value="İletişim">İletişim Adresi</option>
+                    <option value="İş">İş Adresi</option>                    
+                </select>
+            </div>
+        </address>
+        
+    </div>
     <input type="submit" id="btn" />
+}
+@section scripts
+{
+    <script src="~/Scripts/dinamik.js"></script>
+    <script src="~/Scripts/cascadingDDList.js"></script>
 }
 
