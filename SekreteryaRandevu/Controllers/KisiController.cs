@@ -1,7 +1,9 @@
 ﻿using SekreteryaRandevu.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -41,26 +43,20 @@ namespace SekreteryaRandevu.Controllers
             ViewBag.adresUlkeID = new SelectList(db.ulkes, "ulkeID", "ulkeAdi");
             return View();
         }
-        
+
         public JsonResult ilList(int id)
         {
             List<sehir> s = db.sehirs.Where(m => m.sehirUlkeID == id).OrderBy(m => m.sehirAdi).ToList();
-            var secimList = new SelectList(s, "sehirID", "sehirAdi");            
-            return Json(secimList, JsonRequestBehavior.AllowGet); 
+            var secimList = new SelectList(s, "sehirID", "sehirAdi");
+            return Json(secimList, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Kisi/Create
         [HttpPost]
-        public ActionResult Olustur(FormCollection collection, kisi kisi,adre adre)
+        public ActionResult Olustur(FormCollection collection, kisi kisi)
         {
             List<iletisimToKisi> i = new List<iletisimToKisi>();
-            List<adre> ad = new List<adre>();
-            ad.Add(adre);
             kisi k = new kisi();
-
-            k.kisiAdi = collection["kisiAdi"];
-            var a = collection.GetValues("cep");
-
             try
             {
                 // TODO: Add insert logic here
@@ -106,10 +102,10 @@ namespace SekreteryaRandevu.Controllers
                     data.iletisimID = 12;
                     i.Add(data);
                 }
-                kisi.iletisimToKisis = i;
-                kisi.adres = ad;
-                db.kisis.Add(kisi);
-                db.SaveChanges();
+                kisi.iletisimToKisis = i;               
+                    db.kisis.Add(kisi);
+                    db.SaveChanges();
+
                 return RedirectToAction("Liste");
             }
             catch
@@ -119,29 +115,102 @@ namespace SekreteryaRandevu.Controllers
         }
 
         // GET: Kisi/Edit/5
-        public ActionResult Duzenle(int id)
+        public ActionResult Duzenle(int? id)
         {
-            kisi kisi = db.kisis.Where(p => p.kisiID == id).SingleOrDefault();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            kisi kisi = db.kisis.Find(id);
+            if (kisi == null)
+            {
+                return HttpNotFound();
+            }
             List<iletisimToKisi> kisiİletisim = db.iletisimToKisis.Where(m => m.kisiID == id).ToList();
-            List<adre> kisiAdres = db.adres.Where(n => n.adresKisiID == id).ToList();            
-            return View();
+            List<adre> kisiAdres = db.adres.Where(n => n.adresKisiID == id).ToList();
+            ViewBag.kisiSirketID = new SelectList(db.sirkets, "sirketID", "sirketAdi", kisi.kisiSirketID);
+            ViewBag.adresUlkeID = new SelectList(db.ulkes, "ulkeID", "ulkeAdi", kisi.adres.FirstOrDefault().adresUlkeID);
+            return View(kisi);
         }
 
         // POST: Kisi/Edit/5
-        [HttpPost]
-        public ActionResult Duzenle(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        //[HttpPost]
+        //public ActionResult Duzenle(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+        [HttpPost]
+        public ActionResult Duzenle(int id, FormCollection collection, kisi kisi, adre adre)
+        {
+            if (kisi!=null&&adre !=null)
             {
-                return View();
+                List<iletisimToKisi> i = new List<iletisimToKisi>();
+                List<adre> ad = new List<adre>();
+                ad.Add(adre);  // TODO: Add insert logic here
+                foreach (var item in collection.GetValues("cep"))
+                {
+
+
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 1;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("is"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 6;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("ev"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 4;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("mail"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 11;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("fax"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 9;
+                    i.Add(data);
+                }
+                foreach (var item in collection.GetValues("site"))
+                {
+                    iletisimToKisi data = new iletisimToKisi();
+                    data.value = item.ToString();
+                    data.iletisimID = 12;
+                    i.Add(data);
+                }
+                kisi.iletisimToKisis = i;
+                kisi.adres = ad;
+
+                db.Entry(kisi).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Liste");
             }
+            ViewBag.kisiSirketID = new SelectList(db.sirkets, "sirketID", "sirketAdi", kisi.kisiSirketID);
+            return View(kisi);
         }
+
 
         // GET: Kisi/Delete/5
         public ActionResult Sil(int id)
@@ -151,18 +220,26 @@ namespace SekreteryaRandevu.Controllers
 
         // POST: Kisi/Delete/5
         [HttpPost]
-        public ActionResult Sil(int id, FormCollection collection)
+        public ActionResult Sil(int? id, FormCollection collection)
         {
-            try
+            if (id == null)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            catch
+            kisi kisi = db.kisis.Find(id);
+            if (kisi == null)
             {
-                return View();
+                return HttpNotFound();
             }
+            return View(kisi);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

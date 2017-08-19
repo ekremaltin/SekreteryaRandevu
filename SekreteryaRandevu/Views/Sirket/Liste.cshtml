@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SekreteryaRandevu.Models.sirket>
+
+@{
+    ViewBag.Title = "Liste";
+}
+
+<h2>Liste</h2>
+
+<p>
+    @Html.ActionLink("Yeni Kayıt", "Olustur")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.sirketAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sirketSektor)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.sirketSorumluAdiSoyadi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sirketSorumluTel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.adre.adresIlce)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.sirketAdi)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.sirketSektor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sirketSorumluAdiSoyadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sirketSorumluTel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.adre.adresIlce)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Duzenle", new { id=item.sirketID }) |
+
+            @Html.ActionLink("Detay", "Detay", new { id=item.sirketID }) |
+
+            @Html.ActionLink("Sil", "Sil", new { id=item.sirketID })
+        </td>
+    </tr>
+}
+
+</table>

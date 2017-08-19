@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SekreteryaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SekreteryaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="adres">
           <Key>
             <PropertyRef Name="adresID" />
@@ -119,10 +119,8 @@
           </Key>
           <Property Name="sirketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sirketAdi" Type="nvarchar" MaxLength="100" />
-          <Property Name="sirketKurulusTarih" Type="datetime" />
           <Property Name="sirketSektor" Type="nvarchar" MaxLength="50" />
           <Property Name="sirketAdresID" Type="int" />
-          <Property Name="sirketLokasyon" Type="geography" />
           <Property Name="sirketSorumluAdiSoyadi" Type="nvarchar" MaxLength="50" />
           <Property Name="sirketSorumluTel" Type="nchar" MaxLength="10" />
         </EntityType>
@@ -441,8 +439,7 @@
             <End Role="user" EntitySet="user" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SekreteryaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -585,12 +582,10 @@
           </Key>
           <Property Name="sirketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sirketAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="sirketKurulusTarih" Type="DateTime" Precision="3" />
           <Property Name="sirketSektor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="sirketAdresID" Type="Int32" />
-          <Property Name="sirketLokasyon" Type="Geography" />
           <Property Name="sirketSorumluAdiSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sirketSorumluTel" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="sirketSorumluTel" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="adre" Relationship="Self.FK_sirket_adres" FromRole="sirket" ToRole="adres" />
           <NavigationProperty Name="iletisimToSirkets" Relationship="Self.FK_iletisimToSirket_sirket" FromRole="sirket" ToRole="iletisimToSirket" />
           <NavigationProperty Name="kisis" Relationship="Self.FK_kisiler_sirket" FromRole="sirket" ToRole="kisi" />
@@ -1046,10 +1041,8 @@
               <MappingFragment StoreEntitySet="sirket">
                 <ScalarProperty Name="sirketID" ColumnName="sirketID" />
                 <ScalarProperty Name="sirketAdi" ColumnName="sirketAdi" />
-                <ScalarProperty Name="sirketKurulusTarih" ColumnName="sirketKurulusTarih" />
                 <ScalarProperty Name="sirketSektor" ColumnName="sirketSektor" />
                 <ScalarProperty Name="sirketAdresID" ColumnName="sirketAdresID" />
-                <ScalarProperty Name="sirketLokasyon" ColumnName="sirketLokasyon" />
                 <ScalarProperty Name="sirketSorumluAdiSoyadi" ColumnName="sirketSorumluAdiSoyadi" />
                 <ScalarProperty Name="sirketSorumluTel" ColumnName="sirketSorumluTel" />
               </MappingFragment>

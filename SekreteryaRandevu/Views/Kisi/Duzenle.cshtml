@@ -1,7 +1,197 @@
-﻿
+﻿@using SekreteryaRandevu.Models
+@model kisi
+
 @{
     ViewBag.Title = "Duzenle";
+
 }
 
 <h2>Duzenle</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>kisi</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.kisiID)
+        @Html.HiddenFor(model => model.adres.FirstOrDefault().adresID)
+
+        <div class="form-group">
+            @Html.Label("AD")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.kisiAdi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.kisiAdi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("SOYAD")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.kisiSoyadi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.kisiSoyadi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("MESLEK")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.kisiMeslek, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.kisiMeslek, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("ÜNVAN")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.kisiUnvan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.kisiUnvan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("EK BİLGİ")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.kisiEkBilgi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.kisiEkBilgi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("ŞİRKET", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("kisiSirketID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.kisiSirketID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("YÖNETİCİ Mİ?")
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.kisiYonetici)
+                    @Html.ValidationMessageFor(model => model.kisiYonetici, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        @* <div class="form-group">
+                @Html.LabelFor(model => model.birimID, "birimID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("birimID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.birimID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        @foreach (var item in Model.adres)
+        {
+            <address id="adres">
+                <div id="ulke" class="form-group">
+                    <label>Ülke :</label>
+                    @Html.DropDownList("adresUlkeID", null, item.ulke.ulkeAdi, new { @class = "form-control" })
+                    @*<select name="adresUlkeID" >
+                            <option selected value=@Model.adres.FirstOrDefault().adresUlkeID>@Model.adres.FirstOrDefault().ulke.ulkeAdi</option>
+                        </select>*@
+                </div>
+                <div id="sehir" class="form-group">
+                    <label>İl :</label>
+                    <select id="adresILID" name="adresILID" class="form-control">
+                        <option selected>@item.sehir.sehirAdi</option>
+                    </select>
+                </div>
+                <div id="ilce">
+                    <label>İlçe :</label>
+                    <input type="text" name="adresIlce" />
+                </div>
+                <div id="postakodu">
+                    <label>Posta Kodu :</label>
+                    <input type="text" name="adresPostaKodu" />
+                </div>
+                <div id="adresgenis">
+                    <label>Adres Kodu :</label>
+                    <input type="text" name="adresAdres" />
+                </div>
+                <div id="adresTip">
+                    <select name="adresTip">
+                        <option value="İkamet">İkamet Adresi</option>
+                        <option value="İletişim">İletişim Adresi</option>
+                        <option value="İş">İş Adresi</option>
+                    </select>
+                </div>
+            </address>
+
+        }
+        @foreach (var item in Model.iletisimToKisis)
+        {
+            <div id="iletisim" class="form-horizontal">
+                @if (item.iletisimID == 1)
+                {
+                    <div id="icep">
+                        <div id="cep" class="form-group">
+                            <label class="col-md-2">Cep Telefonu : </label>
+                            <input type="tel" name="cep" value=@item.value />
+                        </div>
+                    </div>
+                }
+                @if (item.iletisimID == 4)
+                {
+                    <div id="iev">
+                        <div id="ev" class="form-group">
+                            <label class="col-md-2">Ev Telefonu : </label>
+                            <input type="tel" name="ev" value=@item.value />
+                        </div>
+                    </div>
+                }
+                @if (item.iletisimID == 6)
+                {
+                    <div id="iis">
+                        <div id="is" class="form-group">
+                            <label class="col-md-2">İş Telefonu : </label>
+                            <input type="tel" name="is" value=@item.value />
+                        </div>
+                    </div>
+                }
+                @if (item.iletisimID == 9)
+                {
+                    <div id="ifax">
+                        <div id="ev" class="form-group">
+                            <label class="col-md-2">Fax Site : </label>
+                            <input type="text" name="fax" value=@item.value />
+                        </div>
+                    </div>
+                }
+                @if (item.iletisimID == 11)
+                {
+                    <div id="imail">
+                        <div id="mail" class="form-group">
+                            <label class="col-md-2">E-Mail Telefonu : </label>
+                            <input type="email" name="mail" value=@item.value />
+                        </div>
+                    </div>
+                }
+                @if (item.iletisimID == 12)
+                {
+                    <div id="isite">
+                        <div id="site" class="form-group">
+                            <label class="col-md-2">Web Site : </label>
+                            <input type="text" name="site" value=@item.value />
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>    
+}
+<div>
+    @Html.ActionLink("Back to List", "Liste")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 

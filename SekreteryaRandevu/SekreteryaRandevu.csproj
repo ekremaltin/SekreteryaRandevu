@@ -132,6 +132,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KisiController.cs" />
+    <Compile Include="Controllers\SirketController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -225,8 +226,9 @@
       <DependentUpon>ModelSekreter.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\cascadingDDList.js" />
+    <Content Include="Scripts\cascadingUS.js" />
     <Content Include="Scripts\dinamik.js" />
+    <Content Include="Scripts\dinamikAdres.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -256,6 +258,11 @@
     <Content Include="Views\Kisi\Detay.cshtml" />
     <Content Include="Views\Kisi\Olustur.cshtml" />
     <Content Include="Views\Kisi\Duzenle.cshtml" />
+    <Content Include="Views\Sirket\Olustur.cshtml" />
+    <Content Include="Views\Sirket\Sil.cshtml" />
+    <Content Include="Views\Sirket\Detay.cshtml" />
+    <Content Include="Views\Sirket\Duzenle.cshtml" />
+    <Content Include="Views\Sirket\Liste.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

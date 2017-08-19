@@ -23,10 +23,8 @@ namespace SekreteryaRandevu.Models
     
         public int sirketID { get; set; }
         public string sirketAdi { get; set; }
-        public Nullable<System.DateTime> sirketKurulusTarih { get; set; }
         public string sirketSektor { get; set; }
         public Nullable<int> sirketAdresID { get; set; }
-        public System.Data.Entity.Spatial.DbGeography sirketLokasyon { get; set; }
         public string sirketSorumluAdiSoyadi { get; set; }
         public string sirketSorumluTel { get; set; }
     

@@ -1,0 +1,58 @@
+﻿@model SekreteryaRandevu.Models.sirket
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>sirket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sirketAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sirketAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sirketSektor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sirketSektor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sirketSorumluAdiSoyadi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sirketSorumluAdiSoyadi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sirketSorumluTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sirketSorumluTel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adre.adresIlce)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adre.adresIlce)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Duzenle", "Duzenle", new { id = Model.sirketID }) |
+    @Html.ActionLink("Back to List", "Liste")
+</p>
