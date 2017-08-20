@@ -33,7 +33,23 @@
     </li>
     @foreach (var item in Model.iletisimToKisis)
     {
-        <li>@item.iletisim.iletisimTip</li>
-        <li>@item.value</li>
+        
+        <li class="list-group-item"><label>@item.iletisim.iletisimTip</label> @item.value</li>
+    }
+    @foreach (var item in Model.adres)
+    {
+        
+        <li class="list-group-item"><label>Ulke :</label>@item.ulke.ulkeAdi</li>
+        
+        <li class="list-group-item">
+            <label>sehir :</label> 
+            @if (item.sehir != null)
+            {
+                @item.sehir.sehirAdi
+            }
+        </li>
+        <li class="list-group-item"><label>ilçe :</label>@item.adresIlce</li>
+        <li class="list-group-item"><label>posta kodu :</label>@item.adresPostaKodu</li>
+        <li class="list-group-item"><label>tip :</label>@item.adresTip</li>
     }
 </ul>

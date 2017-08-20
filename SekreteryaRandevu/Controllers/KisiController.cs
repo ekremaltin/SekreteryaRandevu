@@ -53,58 +53,17 @@ namespace SekreteryaRandevu.Controllers
 
         // POST: Kisi/Create
         [HttpPost]
-        public ActionResult Olustur(FormCollection collection, kisi kisi)
+        public ActionResult Olustur(kisi kisi)
         {
-            List<iletisimToKisi> i = new List<iletisimToKisi>();
             kisi k = new kisi();
             try
             {
-                // TODO: Add insert logic here
-                foreach (var item in collection.GetValues("cep"))
+                // TODO: Add insert logic here  
+                if (kisi!=null)
                 {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 1;
-                    i.Add(data);
-                }
-                foreach (var item in collection.GetValues("is"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 6;
-                    i.Add(data);
-                }
-                foreach (var item in collection.GetValues("ev"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 4;
-                    i.Add(data);
-                }
-                foreach (var item in collection.GetValues("mail"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 11;
-                    i.Add(data);
-                }
-                foreach (var item in collection.GetValues("fax"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 9;
-                    i.Add(data);
-                }
-                foreach (var item in collection.GetValues("site"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 12;
-                    i.Add(data);
-                }
-                kisi.iletisimToKisis = i;               
                     db.kisis.Add(kisi);
                     db.SaveChanges();
+                }                    
 
                 return RedirectToAction("Liste");
             }
@@ -128,111 +87,70 @@ namespace SekreteryaRandevu.Controllers
             }
             List<iletisimToKisi> kisiİletisim = db.iletisimToKisis.Where(m => m.kisiID == id).ToList();
             List<adre> kisiAdres = db.adres.Where(n => n.adresKisiID == id).ToList();
-            ViewBag.kisiSirketID = new SelectList(db.sirkets, "sirketID", "sirketAdi", kisi.kisiSirketID);
+            ViewBag.sirketler = new SelectList(db.sirkets, "sirketID", "sirketAdi", kisi.kisiSirketID);
+            ViewBag.birimler = new SelectList(db.birims, "birimID", "birimAdi", kisi.birimID);
             ViewBag.adresUlkeID = new SelectList(db.ulkes, "ulkeID", "ulkeAdi", kisi.adres.FirstOrDefault().adresUlkeID);
+            ViewBag.sehirler = new SelectList(db.sehirs, "sehirID", "sehirAdi", kisi.adres.FirstOrDefault().adresUlkeID);
             return View(kisi);
         }
-
-        // POST: Kisi/Edit/5
-        //[HttpPost]
-        //public ActionResult Duzenle(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
         [HttpPost]
-        public ActionResult Duzenle(int id, FormCollection collection, kisi kisi, adre adre)
+        public ActionResult Duzenle(kisi kisi)
         {
-            if (kisi!=null&&adre !=null)
+            if (kisi!=null)
             {
-                List<iletisimToKisi> i = new List<iletisimToKisi>();
-                List<adre> ad = new List<adre>();
-                ad.Add(adre);  // TODO: Add insert logic here
-                foreach (var item in collection.GetValues("cep"))
+                for (int i = 0; i < kisi.adres.Count(); i++)
                 {
+                    kisi.adres.ToList()[i].adresKisiID = kisi.kisiID;
+                }
+                for (int i = 0; i < kisi.iletisimToKisis.Count(); i++)
+                {
+                    kisi.iletisimToKisis.ToList()[i].kisiID = kisi.kisiID;
 
-
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 1;
-                    i.Add(data);
                 }
-                foreach (var item in collection.GetValues("is"))
+                for (int i = 0; i < kisi.adres.Count(); i++)
                 {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 6;
-                    i.Add(data);
+                    db.Entry(kisi.adres.ToList()[i]).State = EntityState.Modified;
                 }
-                foreach (var item in collection.GetValues("ev"))
+                for (int i = 0; i < kisi.iletisimToKisis.Count(); i++)
                 {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 4;
-                    i.Add(data);
+                    db.Entry(kisi.iletisimToKisis.ToList()[i]).State = EntityState.Modified;
                 }
-                foreach (var item in collection.GetValues("mail"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 11;
-                    i.Add(data);
-                }
-                foreach (var item in collection.GetValues("fax"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 9;
-                    i.Add(data);
-                }
-                foreach (var item in collection.GetValues("site"))
-                {
-                    iletisimToKisi data = new iletisimToKisi();
-                    data.value = item.ToString();
-                    data.iletisimID = 12;
-                    i.Add(data);
-                }
-                kisi.iletisimToKisis = i;
-                kisi.adres = ad;
-
                 db.Entry(kisi).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Liste");
+                
             }
             ViewBag.kisiSirketID = new SelectList(db.sirkets, "sirketID", "sirketAdi", kisi.kisiSirketID);
             return View(kisi);
         }
-
-
-        // GET: Kisi/Delete/5
-        public ActionResult Sil(int id)
-        {
-            return View();
-        }
-
-        // POST: Kisi/Delete/5
-        [HttpPost]
-        public ActionResult Sil(int? id, FormCollection collection)
+        
+        // POST: Kisi/Delete/5        
+        public ActionResult SilIslem(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             kisi kisi = db.kisis.Find(id);
+            List<adre> adresler = db.adres.Where(m => m.adresKisiID == id).ToList();
+            List<iletisimToKisi> iletisimler = db.iletisimToKisis.Where(m => m.kisiID == id).ToList();
             if (kisi == null)
             {
                 return HttpNotFound();
             }
-            return View(kisi);
+            for (int i = 0; i < adresler.Count(); i++)
+            {
+                db.adres.Remove(adresler[i]);
+            }
+            for (int i = 0; i < iletisimler.Count(); i++)
+            {
+                db.iletisimToKisis.Remove(iletisimler[i]);
+            }
+            db.kisis.Remove(kisi);
+            db.SaveChanges();
+            return RedirectToAction("Liste");
         }
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)

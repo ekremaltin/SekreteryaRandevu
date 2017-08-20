@@ -216,6 +216,7 @@
       <LastGenOutput>ModelSekreter.cs</LastGenOutput>
     </Content>
     <Content Include="notlar.txt" />
+    <Content Include="Scripts\ajaxDelete.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\ModelSekreter.edmx">
@@ -227,7 +228,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\cascadingUS.js" />
-    <Content Include="Scripts\dinamik.js" />
+    <Content Include="Scripts\dynamicIletisim.js" />
     <Content Include="Scripts\dinamikAdres.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -263,6 +264,7 @@
     <Content Include="Views\Sirket\Detay.cshtml" />
     <Content Include="Views\Sirket\Duzenle.cshtml" />
     <Content Include="Views\Sirket\Liste.cshtml" />
+    <Content Include="Views\Kisi\SilIslem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -64,42 +64,48 @@
         <div id="icep">
             <div id="cep" class="form-group">
                 <label class="col-md-2">Cep Telefonu : </label>
-                <input type="tel" name="cep" />
+                <input type="tel" name="iletisimToKisis[0].value" />
+                <select name="iletisimToKisis[0].iletisimID" style="display:none"><option value="1" ></option></select>
                 <button id="eklecep" name="cep" type="button">+Cep</button>
             </div>
         </div>
         <div id="iis">
             <div id="is" class="form-group">
                 <label class="col-md-2">İş Telefonu : </label>
-                <input type="tel" name="is" />
+                <input type="tel" name="iletisimToKisis[1].value" />
+                <select name="iletisimToKisis[1].iletisimID" style="display:none"><option value="6"></option></select>
                 <button id="ekleis" name="is" type="button">+İş</button>
             </div>
         </div>
         <div id="iev">
             <div id="ev" class="form-group">
                 <label class="col-md-2">Ev Telefonu : </label>
-                <input type="tel" name="ev" />
+                <input type="tel" name="iletisimToKisis[2].value" />
+                <select name="iletisimToKisis[2].iletisimID" style="display:none"><option value="4"></option></select>
                 <button id="ekleev" name="ev" type="button">+Ev</button>
+            </div>
+        </div>
+        <div id="ifax">
+            <div id="fax" class="form-group">
+                <label class="col-md-2">Fax Site : </label>
+                <input type="text" name="iletisimToKisis[3].value" />
+                <select name="iletisimToKisis[3].iletisimID" style="display:none"><option value="9"></option></select>
+                <button id="eklefax" name="ev" type="button">+Fax</button>
             </div>
         </div>
         <div id="imail">
             <div id="mail" class="form-group">
                 <label class="col-md-2">E-Mail Telefonu : </label>
-                <input type="email" name="mail" />
+                <input type="email" name="iletisimToKisis[4].value" />
+                <select name="iletisimToKisis[4].iletisimID" style="display:none"><option value="11"></option></select>
                 <button id="eklemail" name="ev" type="button">+Mail</button>
             </div>
-        </div>
-        <div id="ifax">
-            <div id="ev" class="form-group">
-                <label class="col-md-2">Fax Site : </label>
-                <input type="text" name="fax" />
-                <button id="eklefax" name="ev" type="button">+Fax</button>
-            </div>
-        </div>
+        </div>        
         <div id="isite">
             <div id="site" class="form-group">
                 <label class="col-md-2">Web Site : </label>
-                <input type="text" name="site" />
+                <input type="text" name="iletisimToKisis[5].value" />
+                <select name="iletisimToKisis[5].iletisimID" style="display:none"><option value="12"></option></select>
                 <button id="eklesite" name="ev" type="button">+Web Site</button>
             </div>
         </div>
@@ -110,7 +116,7 @@
             <div id="ulke" class="form-group">
                 <label>Ülke :</label>
                 <select name="adres[0].adresUlkeID" id="adresUlkeID">
-                    <option value="0">Ulke Seçiniz</option>
+                    <option>Ulke Seçiniz</option>
                     @foreach (var item in ViewBag.adresUlkeID)
                     {
                         <option value=@item.Value>@item.Text</option>
@@ -150,7 +156,7 @@
             <div id="ulke" class="form-group">
                 <label>Ülke :</label>
                 <select name="adres[1].adresUlkeID" id="adresUlkeID2">
-                    <option value="0">Ulke Seçiniz</option>
+                    <option>Ulke Seçiniz</option>
                     @foreach (var item in ViewBag.adresUlkeID)
                     {
                         <option value=@item.Value>@item.Text</option>
@@ -189,8 +195,8 @@
 }
 @section scripts
 {
-    <script src="~/Scripts/dinamik.js"></script>
-<script src="~/Scripts/cascadingUS.js"></script>
+    <script src="~/Scripts/dynamicIletisim.js"></script>
+    <script src="~/Scripts/cascadingUS.js"></script>
     <script src="~/Scripts/dinamikAdres.js"></script>
 }
 

@@ -22,8 +22,6 @@
         <div class="col-md-2">@item.kisiMeslek</div>
         <a href="/Kisi/Detay/@item.kisiID" class="glyphicon glyphicon-list-alt">Detay</a>&nbsp;
         <a href="/Kisi/Duzenle/@item.kisiID" class="glyphicon glyphicon-pencil">Düzenle</a>&nbsp;
-        <a href="/Kisi/Sil/@item.kisiID" class="glyphicon glyphicon-remove">Sil</a>
+        <a id="silKontrol" href="/Kisi/SilIslem/@item.kisiID"  onclick='return confirm("Emin misiniz");' class="glyphicon glyphicon-remove">Sil</a>
     </div>
 }
-
-
