@@ -22,6 +22,7 @@
             <div class="form-group">
                 <label>Ad:</label>
                 <input type="text" name="kisiAdi" value="@Model.kisiAdi" />
+                <input type="text" />
             </div>
         </div>
         <div class="form-horizontal">
@@ -189,7 +190,6 @@
                             <option value="İletişim" @if (Model.adres.ToList()[1].adresTip=="İletişim") { <text> selected </text>  }>İletişim Adresi</option>
                             <option value="İş" @if (Model.adres.ToList()[1].adresTip=="İş") { <text> selected </text>  }>İş Adresi</option>
                         </select>
-
                     </div>
                     @*<a href="" id="@Model.adres.ToList()[1].adresID" onclick="deleteData();" class="glyphicon glyphicon-remove">Adresi Sil</a>*@
                 </address>

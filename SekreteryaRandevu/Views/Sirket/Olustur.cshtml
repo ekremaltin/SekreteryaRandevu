@@ -29,15 +29,7 @@
                 @Html.EditorFor(model => model.sirketSektor, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.sirketSektor, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.sirketAdresID, "sirketAdresID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("sirketAdresID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.sirketAdresID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        </div>        
 
         <div class="form-group">
             @Html.LabelFor(model => model.sirketSorumluAdiSoyadi, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,12 +46,123 @@
                 @Html.ValidationMessageFor(model => model.sirketSorumluTel, "", new { @class = "text-danger" })
             </div>
         </div>
+        @*EKLENENLER*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresUlkeID, "Ulke", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="adre.adresUlkeID" id="adresUlkeID">
+                    <option>Ulke Seçiniz</option>
+                    @foreach (var item in ViewBag.ulkeler)
+                    {
+                        <option value=@item.Value>@item.Text</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.adre.adresUlkeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresILID, "il", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="adre.adresILID" id="adresILID">
+                    <option>Ulke Seçiniz</option>                    
+                </select>
+                @Html.ValidationMessageFor(model => model.adre.adresILID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresIlce, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adre.adresIlce, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adre.adresIlce, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresAdres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.adre.adresAdres, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adre.adresAdres, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresPostaKodu, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adre.adresPostaKodu, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*DİNAMİK İLETİŞİM*@
+        <div class="form-group" id="icep">
+            @Html.LabelFor(model => model.iletisimToSirkets.ToList()[0].value,"cep", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="tel" name="iletisimToSirkets[0].value" class="form-control text-box single-line" />
+                <select name="iletisimToSirkets[0].iletisimID" style="display:none"><option value="1"></option></select>
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+            <button id="eklecep" name="cep" type="button">+Cep</button>
+        </div>
+
+        <div class="form-group" id="iis">
+            @Html.LabelFor(model => model.iletisimToSirkets.ToList()[1].value, "is", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="tel" name="iletisimToSirkets[1].value" class="form-control text-box single-line" />
+                <select name="iletisimToSirkets[1].iletisimID" style="display:none"><option value="6"></option></select>
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+            <button id="ekleis" name="cep" type="button">+is</button>
+        </div>
+
+        <div class="form-group" id="iev">
+            @Html.LabelFor(model => model.iletisimToSirkets.ToList()[2].value, "ev", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="tel" name="iletisimToSirkets[2].value" class="form-control text-box single-line" />
+                <select name="iletisimToSirkets[2].iletisimID" style="display:none"><option value="4"></option></select>
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+            <button id="ekleev" name="cep" type="button">+ev</button>
+        </div>
+
+        <div class="form-group" id="ifax">
+            @Html.LabelFor(model => model.iletisimToSirkets.ToList()[3].value, "fax", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="tel" name="iletisimToSirkets[3].value" class="form-control text-box single-line" />
+                <select name="iletisimToSirkets[3].iletisimID" style="display:none"><option value="9"></option></select>
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+            <button id="eklefax" name="cep" type="button">+fax</button>
+        </div>
+
+        <div class="form-group" id="imail">
+            @Html.LabelFor(model => model.iletisimToSirkets.ToList()[4].value, "mail", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="tel" name="iletisimToSirkets[4].value" class="form-control text-box single-line" />
+                <select name="iletisimToSirkets[4].iletisimID" style="display:none"><option value="11"></option></select>
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+            <button id="eklemail" name="cep" type="button">+mail</button>
+        </div>
+
+        <div class="form-group" id="isite">
+            @Html.LabelFor(model => model.iletisimToSirkets.ToList()[5].value, "site", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="tel" name="iletisimToSirkets[5].value" class="form-control text-box single-line" />
+                <select name="iletisimToSirkets[5].iletisimID" style="display:none"><option value="12"></option></select>
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+            <button id="eklesite" name="cep" type="button">+site</button>
+        </div>
+
+        @*POST BUTTON*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Oluştur" class="btn btn-default" />
             </div>
         </div>
+
+
     </div>
 }
 
@@ -69,4 +172,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/cascadingUS.js"></script>
+<script src="~/Scripts/dinamikAdres.js"></script>
+<script src="~/Scripts/dynamicSIltsm.js"></script>
 }

@@ -29,6 +29,8 @@ namespace SekreteryaRandevu.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             sirket sirket = db.sirkets.Find(id);
+            adre adres = db.adres.Where(m => m.adresID == sirket.sirketAdresID).SingleOrDefault();
+            ViewBag.sirketAdres = adres;         
             if (sirket == null)
             {
                 return HttpNotFound();
@@ -39,7 +41,7 @@ namespace SekreteryaRandevu.Controllers
         // GET: Sirket/Create
         public ActionResult Olustur()
         {
-            ViewBag.sirketAdresID = new SelectList(db.adres, "adresID", "adresIlce");
+            ViewBag.ulkeler = new SelectList(db.ulkes, "ulkeID", "ulkeAdi");
             return View();
         }
 
@@ -48,7 +50,7 @@ namespace SekreteryaRandevu.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Olustur([Bind(Include = "sirketID,sirketAdi,sirketSektor,sirketAdresID,sirketSorumluAdiSoyadi,sirketSorumluTel")] sirket sirket)
+        public ActionResult Olustur(sirket sirket)
         {
             if (ModelState.IsValid)
             {

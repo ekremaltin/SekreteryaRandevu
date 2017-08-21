@@ -1,13 +1,13 @@
 ﻿@model SekreteryaRandevu.Models.sirket
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Şirket Detay";
 }
 
-<h2>Details</h2>
+<h2>Detaylar</h2>
 
 <div>
-    <h4>sirket</h4>
+    <h4>@Model.sirketAdi Detaylı Bilgi</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -41,14 +41,54 @@
         <dd>
             @Html.DisplayFor(model => model.sirketSorumluTel)
         </dd>
+        @*EKLENENLER ADRES *@ 
+        <dt>
+            ülke
+        </dt>
+        <dd>
+            @Model.adre.ulke.ulkeAdi
+            @Html.DisplayFor(model => model.adre.ulke.ulkeAdi)
+        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.adre.adresIlce)
+            il
         </dt>
+        <dd>
+            @Html.DisplayFor(model => model.adre.sehir.sehirAdi)
+        </dd>
 
+        <dt>
+            ilce
+        </dt>
         <dd>
             @Html.DisplayFor(model => model.adre.adresIlce)
         </dd>
+
+        <dt>
+            Adres
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.adre.adresAdres)
+        </dd>
+
+        <dt>
+            Posta Kodu
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.adre.adresPostaKodu)
+        </dd>
+        @*EKLENENLER ADRES *@
+
+        @foreach (var item in Model.iletisimToSirkets)
+        {
+            <dt>
+                @item.iletisim.iletisimTip
+            </dt>
+            <dd>
+                @item.value
+            </dd>            
+        }
+
 
     </dl>
 </div>

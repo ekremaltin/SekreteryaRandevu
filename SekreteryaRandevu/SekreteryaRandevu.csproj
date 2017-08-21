@@ -230,6 +230,7 @@
     <Content Include="Scripts\cascadingUS.js" />
     <Content Include="Scripts\dynamicIletisim.js" />
     <Content Include="Scripts\dinamikAdres.js" />
+    <Content Include="Scripts\dynamicSIltsm.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
