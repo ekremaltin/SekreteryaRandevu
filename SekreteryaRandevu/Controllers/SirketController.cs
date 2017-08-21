@@ -17,7 +17,7 @@ namespace SekreteryaRandevu.Controllers
         // GET: Sirket
         public ActionResult Liste()
         {
-            var sirkets = db.sirkets.Include(s => s.adre);
+            var sirkets = db.sirkets;
             return View(sirkets.ToList());
         }
 
@@ -75,7 +75,8 @@ namespace SekreteryaRandevu.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.sirketAdresID = new SelectList(db.adres, "adresID", "adresIlce", sirket.sirketAdresID);
+            ViewBag.ulkeler = new SelectList(db.ulkes, "ulkeID", "ulkeAdi", sirket.adre.adresUlkeID);
+            ViewBag.sehirler = new SelectList(db.sehirs, "sehirID", "sehirAdi", sirket.adre.adresILID);
             return View(sirket);
         }
 
@@ -84,19 +85,31 @@ namespace SekreteryaRandevu.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Duzenle([Bind(Include = "sirketID,sirketAdi,sirketSektor,sirketAdresID,sirketSorumluAdiSoyadi,sirketSorumluTel")] sirket sirket)
-        {
-            if (ModelState.IsValid)
+        public ActionResult Duzenle(sirket sirket)
+        {   
+            for (int i = 0; i <  sirket.iletisimToSirkets.Count(); i++)
             {
+                sirket.iletisimToSirkets.ToList()[i].sirketID = sirket.sirketID;
+
+            }            
+            for (int i = 0; i < sirket.iletisimToSirkets.Count(); i++)
+            {
+                db.Entry(sirket.iletisimToSirkets.ToList()[i]).State = EntityState.Modified;
+            }
+            if (sirket!=null)
+            {
+                db.Entry(sirket.adre).State = EntityState.Modified;
                 db.Entry(sirket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Liste");
             }
-            ViewBag.sirketAdresID = new SelectList(db.adres, "adresID", "adresIlce", sirket.sirketAdresID);
+            ViewBag.ulkeler = new SelectList(db.ulkes, "ulkeID", "ulkeAdi", sirket.adre.adresUlkeID);
+            ViewBag.sehirler = new SelectList(db.sehirs, "sehirID", "sehirAdi", sirket.adre.adresILID);
             return View(sirket);
         }
 
         // GET: Sirket/Delete/5
+        
         public ActionResult Sil(int? id)
         {
             if (id == null)
@@ -104,24 +117,22 @@ namespace SekreteryaRandevu.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             sirket sirket = db.sirkets.Find(id);
-            if (sirket == null)
+            adre adres = db.adres.Where(m => m.adresID == sirket.sirketAdresID).FirstOrDefault();
+            List<iletisimToSirket> iletisimler = db.iletisimToSirkets.Where(m => m.sirketID == id).ToList();
+
+            if (sirket == null || adres ==null || iletisimler == null)
             {
                 return HttpNotFound();
             }
-            return View(sirket);
-        }
-
-        // POST: Sirket/Delete/5
-        [HttpPost, ActionName("Sil")]
-        [ValidateAntiForgeryToken]
-        public ActionResult SilConfirmed(int id)
-        {
-            sirket sirket = db.sirkets.Find(id);
+            for (int i = 0; i < iletisimler.Count(); i++)
+            {
+                db.iletisimToSirkets.Remove(iletisimler[i]);
+            }
+            db.adres.Remove(adres);
             db.sirkets.Remove(sirket);
             db.SaveChanges();
             return RedirectToAction("Liste");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

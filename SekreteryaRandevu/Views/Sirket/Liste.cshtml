@@ -34,7 +34,7 @@
 
             @Html.ActionLink("Detay", "Detay", new { id=item.sirketID }) |
 
-            @Html.ActionLink("Sil", "Sil", new { id=item.sirketID })
+            <a id="silKontrol" href="/Sirket/Sil/@item.sirketID" onclick='return confirm("Emin misiniz");' class="glyphicon glyphicon-remove">Sil</a>
         </td>
     </tr>
 }

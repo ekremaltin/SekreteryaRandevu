@@ -265,7 +265,6 @@
     <Content Include="Views\Sirket\Detay.cshtml" />
     <Content Include="Views\Sirket\Duzenle.cshtml" />
     <Content Include="Views\Sirket\Liste.cshtml" />
-    <Content Include="Views\Kisi\SilIslem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

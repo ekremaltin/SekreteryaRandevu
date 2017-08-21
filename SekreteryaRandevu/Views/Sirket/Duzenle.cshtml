@@ -10,12 +10,14 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>sirket</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.sirketID)
+        @Html.HiddenFor(model => model.sirketAdresID)
+        @Html.HiddenFor(model => model.adre.adresID)
 
         <div class="form-group">
             @Html.LabelFor(model => model.sirketAdi, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -30,14 +32,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.sirketSektor, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.sirketSektor, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.sirketAdresID, "sirketAdresID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("sirketAdresID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.sirketAdresID, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -58,6 +52,84 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresUlkeID, "Ulke", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="adre.adresUlkeID" id="adresUlkeID">
+                    <option>Ulke Seçiniz</option>
+                    @foreach (var item in ViewBag.ulkeler)
+                    {
+                        <option value=@item.Value @if (int.Parse(item.Value) == Model.adre.adresUlkeID) { <text> selected</text>  }>@item.Text</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.adre.adresUlkeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresILID, "il", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="adre.adresILID" id="adresILID">
+                    <option>İl Seçiniz</option>
+                    @if (Model.adre.adresUlkeID == 212)
+                    {
+                        foreach (var item in ViewBag.sehirler)
+                        {
+                            <option value=@item.Value @if (int.Parse(item.Value) == Model.adre.adresILID) { <text> selected</text>  }>@item.Text</option>
+                        }
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.adre.adresILID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresIlce, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adre.adresIlce, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adre.adresIlce, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresAdres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.adre.adresAdres, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adre.adresAdres, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adre.adresPostaKodu, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adre.adresPostaKodu, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adre.adresPostaKodu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sirketSorumluTel, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sirketSorumluTel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sirketSorumluTel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @for (int i = 0; i < Model.iletisimToSirkets.Count(); i++)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.iletisimToSirkets.ToList()[i].iletisim.iletisimTip, Model.iletisimToSirkets.ToList()[i].iletisim.iletisimTip, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="hidden" name="iletisimToSirkets[@i].itsID" value="@Model.iletisimToSirkets.ToList()[i].itsID" />
+                    <input type="tel" name="iletisimToSirkets[@i].value" class="form-control text-box single-line" value="@Model.iletisimToSirkets.ToList()[i].value" />
+                    <select name="iletisimToSirkets[@i].iletisimID" style="display:none"><option value="@Model.iletisimToSirkets.ToList()[i].iletisimID"></option></select>
+                    @Html.ValidationMessageFor(model => model.sirketSorumluTel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        }
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -71,4 +143,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/cascadingUS.js"></script>
 }
