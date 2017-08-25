@@ -19,6 +19,7 @@ namespace SekreteryaRandevu.Models
         {
             this.adres = new HashSet<adre>();
             this.iletisimToKisis = new HashSet<iletisimToKisi>();
+            this.planToKisis = new HashSet<planToKisi>();
         }
     
         public int kisiID { get; set; }
@@ -38,5 +39,7 @@ namespace SekreteryaRandevu.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<iletisimToKisi> iletisimToKisis { get; set; }
         public virtual sirket sirket { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<planToKisi> planToKisis { get; set; }
     }
 }

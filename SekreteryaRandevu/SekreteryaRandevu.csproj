@@ -132,6 +132,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KisiController.cs" />
+    <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\SirketController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,12 +171,6 @@
       <DependentUpon>ModelSekreter.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\plan.cs">
-      <DependentUpon>ModelSekreter.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\planKisi.cs">
-      <DependentUpon>ModelSekreter.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\planToBirim.cs">
       <DependentUpon>ModelSekreter.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\planToKisi.cs">
@@ -239,9 +234,13 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Content\fullcalendar.css" />
+    <Content Include="Scripts\fullcalendar.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -265,6 +264,7 @@
     <Content Include="Views\Sirket\Detay.cshtml" />
     <Content Include="Views\Sirket\Duzenle.cshtml" />
     <Content Include="Views\Sirket\Liste.cshtml" />
+    <Content Include="Views\Plan\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

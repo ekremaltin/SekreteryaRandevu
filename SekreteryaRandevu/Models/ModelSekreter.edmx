@@ -72,38 +72,22 @@
           <Property Name="planID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="planUzunBilgi" Type="nvarchar(max)" />
           <Property Name="planKisaBilgi" Type="nvarchar" MaxLength="200" />
-          <Property Name="planTarih" Type="datetime" />
+          <Property Name="planStartTarih" Type="datetime" />
+          <Property Name="planEndTarih" Type="datetime" />
           <Property Name="planMekan" Type="nvarchar" MaxLength="50" />
           <Property Name="planisCompleted" Type="bit" />
+          <Property Name="planFullDay" Type="bit" />
           <Property Name="planEkBilgi" Type="nvarchar(max)" />
+          <Property Name="planKisiID" Type="int" />
           <Property Name="planUserID" Type="int" />
-          <Property Name="planHedefBirimID" Type="int" />
         </EntityType>
-        <EntityType Name="planKisi">
+        <EntityType Name="planToKisi">
           <Key>
             <PropertyRef Name="pkID" />
           </Key>
           <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="pKisiAdi" Type="nvarchar" MaxLength="150" />
-          <Property Name="pKisiMail" Type="nvarchar" MaxLength="50" />
-          <Property Name="pKisiTel" Type="nvarchar" MaxLength="20" />
-          <Property Name="pKisiPlanID" Type="int" />
-        </EntityType>
-        <EntityType Name="planToBirim">
-          <Key>
-            <PropertyRef Name="ptbID" />
-          </Key>
-          <Property Name="ptbID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="planBirimID" Type="int" />
-          <Property Name="planPlanID" Type="int" />
-        </EntityType>
-        <EntityType Name="planToKisi">
-          <Key>
-            <PropertyRef Name="ptkID" />
-          </Key>
-          <Property Name="ptkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="planID" Type="int" />
-          <Property Name="kisiID" Type="int" />
+          <Property Name="pkKisiID" Type="int" />
+          <Property Name="pkPlanID" Type="int" />
         </EntityType>
         <EntityType Name="sehir">
           <Key>
@@ -122,7 +106,7 @@
           <Property Name="sirketSektor" Type="nvarchar" MaxLength="50" />
           <Property Name="sirketAdresID" Type="int" />
           <Property Name="sirketSorumluAdiSoyadi" Type="nvarchar" MaxLength="50" />
-          <Property Name="sirketSorumluTel" Type="nchar" MaxLength="10" />
+          <Property Name="sirketSorumluTel" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="ulke">
           <Key>
@@ -296,37 +280,25 @@
         </Association>
         <Association Name="FK_planKisi_plan">
           <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
-          <End Role="planKisi" Type="Self.planKisi" Multiplicity="*" />
+          <End Role="planToKisi" Type="Self.planToKisi" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan">
               <PropertyRef Name="planID" />
             </Principal>
-            <Dependent Role="planKisi">
-              <PropertyRef Name="pKisiPlanID" />
+            <Dependent Role="planToKisi">
+              <PropertyRef Name="pkPlanID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_planToBirim_birim">
-          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
-          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
+        <Association Name="FK_planToKisi_kisi">
+          <End Role="kisi" Type="Self.kisi" Multiplicity="0..1" />
+          <End Role="planToKisi" Type="Self.planToKisi" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="birim">
-              <PropertyRef Name="birimID" />
+            <Principal Role="kisi">
+              <PropertyRef Name="kisiID" />
             </Principal>
-            <Dependent Role="planToBirim">
-              <PropertyRef Name="planBirimID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_planToBirim_plan">
-          <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
-          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="planID" />
-            </Principal>
-            <Dependent Role="planToBirim">
-              <PropertyRef Name="planPlanID" />
+            <Dependent Role="planToKisi">
+              <PropertyRef Name="pkKisiID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -362,8 +334,6 @@
           <EntitySet Name="iletisimToSirket" EntityType="Self.iletisimToSirket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="kisi" EntityType="Self.kisi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan" EntityType="Self.plan" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="planKisi" EntityType="Self.planKisi" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="planToBirim" EntityType="Self.planToBirim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="planToKisi" EntityType="Self.planToKisi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sehir" EntityType="Self.sehir" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sirket" EntityType="Self.sirket" Schema="dbo" store:Type="Tables" />
@@ -420,15 +390,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_planKisi_plan" Association="Self.FK_planKisi_plan">
             <End Role="plan" EntitySet="plan" />
-            <End Role="planKisi" EntitySet="planKisi" />
+            <End Role="planToKisi" EntitySet="planToKisi" />
           </AssociationSet>
-          <AssociationSet Name="FK_planToBirim_birim" Association="Self.FK_planToBirim_birim">
-            <End Role="birim" EntitySet="birim" />
-            <End Role="planToBirim" EntitySet="planToBirim" />
-          </AssociationSet>
-          <AssociationSet Name="FK_planToBirim_plan" Association="Self.FK_planToBirim_plan">
-            <End Role="plan" EntitySet="plan" />
-            <End Role="planToBirim" EntitySet="planToBirim" />
+          <AssociationSet Name="FK_planToKisi_kisi" Association="Self.FK_planToKisi_kisi">
+            <End Role="kisi" EntitySet="kisi" />
+            <End Role="planToKisi" EntitySet="planToKisi" />
           </AssociationSet>
           <AssociationSet Name="FK_sirket_adres" Association="Self.FK_sirket_adres">
             <End Role="adres" EntitySet="adres" />
@@ -468,7 +434,6 @@
           <Property Name="birimAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="kisis" Relationship="Self.FK_kisi_birim" FromRole="birim" ToRole="kisi" />
           <NavigationProperty Name="users" Relationship="Self.FK_kullanici_birim" FromRole="birim" ToRole="user" />
-          <NavigationProperty Name="planToBirims" Relationship="Self.FK_planToBirim_birim" FromRole="birim" ToRole="planToBirim" />
         </EntityType>
         <EntityType Name="iletisim">
           <Key>
@@ -519,52 +484,7 @@
           <NavigationProperty Name="birim" Relationship="Self.FK_kisi_birim" FromRole="kisi" ToRole="birim" />
           <NavigationProperty Name="iletisimToKisis" Relationship="Self.FK_iletisimToKisi_kisi" FromRole="kisi" ToRole="iletisimToKisi" />
           <NavigationProperty Name="sirket" Relationship="Self.FK_kisiler_sirket" FromRole="kisi" ToRole="sirket" />
-        </EntityType>
-        <EntityType Name="plan">
-          <Key>
-            <PropertyRef Name="planID" />
-          </Key>
-          <Property Name="planID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="planUzunBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="planKisaBilgi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="planTarih" Type="DateTime" Precision="3" />
-          <Property Name="planMekan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="planisCompleted" Type="Boolean" />
-          <Property Name="planEkBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="planUserID" Type="Int32" />
-          <Property Name="planHedefBirimID" Type="Int32" />
-          <NavigationProperty Name="user" Relationship="Self.FK_plan_user" FromRole="plan" ToRole="user" />
-          <NavigationProperty Name="planKisis" Relationship="Self.FK_planKisi_plan" FromRole="plan" ToRole="planKisi" />
-          <NavigationProperty Name="planToBirims" Relationship="Self.FK_planToBirim_plan" FromRole="plan" ToRole="planToBirim" />
-        </EntityType>
-        <EntityType Name="planKisi">
-          <Key>
-            <PropertyRef Name="pkID" />
-          </Key>
-          <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pKisiAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="pKisiMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="pKisiTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="pKisiPlanID" Type="Int32" />
-          <NavigationProperty Name="plan" Relationship="Self.FK_planKisi_plan" FromRole="planKisi" ToRole="plan" />
-        </EntityType>
-        <EntityType Name="planToBirim">
-          <Key>
-            <PropertyRef Name="ptbID" />
-          </Key>
-          <Property Name="ptbID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="planBirimID" Type="Int32" />
-          <Property Name="planPlanID" Type="Int32" />
-          <NavigationProperty Name="birim" Relationship="Self.FK_planToBirim_birim" FromRole="planToBirim" ToRole="birim" />
-          <NavigationProperty Name="plan" Relationship="Self.FK_planToBirim_plan" FromRole="planToBirim" ToRole="plan" />
-        </EntityType>
-        <EntityType Name="planToKisi">
-          <Key>
-            <PropertyRef Name="ptkID" />
-          </Key>
-          <Property Name="ptkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="planID" Type="Int32" />
-          <Property Name="kisiID" Type="Int32" />
+          <NavigationProperty Name="planToKisis" Relationship="SekreteryaModel.FK_planToKisi_kisi" FromRole="kisi" ToRole="planToKisi" />
         </EntityType>
         <EntityType Name="sehir">
           <Key>
@@ -585,7 +505,7 @@
           <Property Name="sirketSektor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="sirketAdresID" Type="Int32" />
           <Property Name="sirketSorumluAdiSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sirketSorumluTel" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="sirketSorumluTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="adre" Relationship="Self.FK_sirket_adres" FromRole="sirket" ToRole="adres" />
           <NavigationProperty Name="iletisimToSirkets" Relationship="Self.FK_iletisimToSirket_sirket" FromRole="sirket" ToRole="iletisimToSirket" />
           <NavigationProperty Name="kisis" Relationship="Self.FK_kisiler_sirket" FromRole="sirket" ToRole="kisi" />
@@ -611,8 +531,8 @@
           <Property Name="userAdSoyad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="userBirimID" Type="Int32" />
           <NavigationProperty Name="birim" Relationship="Self.FK_kullanici_birim" FromRole="user" ToRole="birim" />
-          <NavigationProperty Name="plans" Relationship="Self.FK_plan_user" FromRole="user" ToRole="plan" />
           <NavigationProperty Name="yetkiLogin" Relationship="Self.FK_users_yetki" FromRole="user" ToRole="yetkiLogin" />
+          <NavigationProperty Name="plans" Relationship="SekreteryaModel.FK_plan_user" FromRole="user" ToRole="plan" />
         </EntityType>
         <EntityType Name="yetkiLogin">
           <Key>
@@ -694,18 +614,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_planToBirim_birim">
-          <End Role="birim" Type="Self.birim" Multiplicity="0..1" />
-          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="birim">
-              <PropertyRef Name="birimID" />
-            </Principal>
-            <Dependent Role="planToBirim">
-              <PropertyRef Name="planBirimID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_iletisimToKisi_iletisim">
           <End Role="iletisim" Type="Self.iletisim" Multiplicity="0..1" />
           <End Role="iletisimToKisi" Type="Self.iletisimToKisi" Multiplicity="*" />
@@ -766,42 +674,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_user">
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
-          <End Role="plan" Type="Self.plan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="userID" />
-            </Principal>
-            <Dependent Role="plan">
-              <PropertyRef Name="planUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_planKisi_plan">
-          <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
-          <End Role="planKisi" Type="Self.planKisi" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="planID" />
-            </Principal>
-            <Dependent Role="planKisi">
-              <PropertyRef Name="pKisiPlanID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_planToBirim_plan">
-          <End Role="plan" Type="Self.plan" Multiplicity="0..1" />
-          <End Role="planToBirim" Type="Self.planToBirim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="planID" />
-            </Principal>
-            <Dependent Role="planToBirim">
-              <PropertyRef Name="planPlanID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Cities_Countries">
           <End Role="ulke" Type="Self.ulke" Multiplicity="1" />
           <End Role="sehir" Type="Self.sehir" Multiplicity="*" />
@@ -833,10 +705,6 @@
           <EntitySet Name="iletisimToKisis" EntityType="Self.iletisimToKisi" />
           <EntitySet Name="iletisimToSirkets" EntityType="Self.iletisimToSirket" />
           <EntitySet Name="kisis" EntityType="Self.kisi" />
-          <EntitySet Name="plans" EntityType="Self.plan" />
-          <EntitySet Name="planKisis" EntityType="Self.planKisi" />
-          <EntitySet Name="planToBirims" EntityType="Self.planToBirim" />
-          <EntitySet Name="planToKisis" EntityType="Self.planToKisi" />
           <EntitySet Name="sehirs" EntityType="Self.sehir" />
           <EntitySet Name="sirkets" EntityType="Self.sirket" />
           <EntitySet Name="ulkes" EntityType="Self.ulke" />
@@ -866,10 +734,6 @@
             <End Role="birim" EntitySet="birims" />
             <End Role="user" EntitySet="users" />
           </AssociationSet>
-          <AssociationSet Name="FK_planToBirim_birim" Association="Self.FK_planToBirim_birim">
-            <End Role="birim" EntitySet="birims" />
-            <End Role="planToBirim" EntitySet="planToBirims" />
-          </AssociationSet>
           <AssociationSet Name="FK_iletisimToKisi_iletisim" Association="Self.FK_iletisimToKisi_iletisim">
             <End Role="iletisim" EntitySet="iletisims" />
             <End Role="iletisimToKisi" EntitySet="iletisimToKisis" />
@@ -890,18 +754,6 @@
             <End Role="sirket" EntitySet="sirkets" />
             <End Role="kisi" EntitySet="kisis" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_user" Association="Self.FK_plan_user">
-            <End Role="user" EntitySet="users" />
-            <End Role="plan" EntitySet="plans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_planKisi_plan" Association="Self.FK_planKisi_plan">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="planKisi" EntitySet="planKisis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_planToBirim_plan" Association="Self.FK_planToBirim_plan">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="planToBirim" EntitySet="planToBirims" />
-          </AssociationSet>
           <AssociationSet Name="FK_Cities_Countries" Association="Self.FK_Cities_Countries">
             <End Role="ulke" EntitySet="ulkes" />
             <End Role="sehir" EntitySet="sehirs" />
@@ -910,8 +762,86 @@
             <End Role="yetkiLogin" EntitySet="yetkiLogins" />
             <End Role="user" EntitySet="users" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="planToKisis" EntityType="SekreteryaModel.planToKisi" />
+          <AssociationSet Name="FK_planToKisi_kisi" Association="SekreteryaModel.FK_planToKisi_kisi">
+            <End Role="kisi" EntitySet="kisis" />
+            <End Role="planToKisi" EntitySet="planToKisis" />
+          </AssociationSet>
+          <EntitySet Name="plans" EntityType="SekreteryaModel.plan" />
+          <AssociationSet Name="FK_plan_user" Association="SekreteryaModel.FK_plan_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_planKisi_plan" Association="SekreteryaModel.FK_planKisi_plan">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="planToKisi" EntitySet="planToKisis" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="planToKisi">
+          <Key>
+            <PropertyRef Name="pkID" />
+          </Key>
+          <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pkKisiID" Type="Int32" />
+          <Property Name="pkPlanID" Type="Int32" />
+          <NavigationProperty Name="kisi" Relationship="SekreteryaModel.FK_planToKisi_kisi" FromRole="planToKisi" ToRole="kisi" />
+          <NavigationProperty Name="plan" Relationship="SekreteryaModel.FK_planKisi_plan" FromRole="planToKisi" ToRole="plan" />
+        </EntityType>
+        <Association Name="FK_planToKisi_kisi">
+          <End Type="SekreteryaModel.kisi" Role="kisi" Multiplicity="0..1" />
+          <End Type="SekreteryaModel.planToKisi" Role="planToKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kisi">
+              <PropertyRef Name="kisiID" />
+            </Principal>
+            <Dependent Role="planToKisi">
+              <PropertyRef Name="pkKisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan">
+          <Key>
+            <PropertyRef Name="planID" />
+          </Key>
+          <Property Name="planID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="planUzunBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="planKisaBilgi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="planStartTarih" Type="DateTime" Precision="3" />
+          <Property Name="planEndTarih" Type="DateTime" Precision="3" />
+          <Property Name="planMekan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="planisCompleted" Type="Boolean" />
+          <Property Name="planFullDay" Type="Boolean" />
+          <Property Name="planEkBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="planKisiID" Type="Int32" />
+          <Property Name="planUserID" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="SekreteryaModel.FK_plan_user" FromRole="plan" ToRole="user" />
+          <NavigationProperty Name="planToKisis" Relationship="SekreteryaModel.FK_planKisi_plan" FromRole="plan" ToRole="planToKisi" />
+        </EntityType>
+        <Association Name="FK_plan_user">
+          <End Type="SekreteryaModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="SekreteryaModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="planUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_planKisi_plan">
+          <End Type="SekreteryaModel.plan" Role="plan" Multiplicity="0..1" />
+          <End Type="SekreteryaModel.planToKisi" Role="planToKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="planID" />
+            </Principal>
+            <Dependent Role="planToKisi">
+              <PropertyRef Name="pkPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -983,50 +913,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plans">
-            <EntityTypeMapping TypeName="SekreteryaModel.plan">
-              <MappingFragment StoreEntitySet="plan">
-                <ScalarProperty Name="planID" ColumnName="planID" />
-                <ScalarProperty Name="planUzunBilgi" ColumnName="planUzunBilgi" />
-                <ScalarProperty Name="planKisaBilgi" ColumnName="planKisaBilgi" />
-                <ScalarProperty Name="planTarih" ColumnName="planTarih" />
-                <ScalarProperty Name="planMekan" ColumnName="planMekan" />
-                <ScalarProperty Name="planisCompleted" ColumnName="planisCompleted" />
-                <ScalarProperty Name="planEkBilgi" ColumnName="planEkBilgi" />
-                <ScalarProperty Name="planUserID" ColumnName="planUserID" />
-                <ScalarProperty Name="planHedefBirimID" ColumnName="planHedefBirimID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="planKisis">
-            <EntityTypeMapping TypeName="SekreteryaModel.planKisi">
-              <MappingFragment StoreEntitySet="planKisi">
-                <ScalarProperty Name="pkID" ColumnName="pkID" />
-                <ScalarProperty Name="pKisiAdi" ColumnName="pKisiAdi" />
-                <ScalarProperty Name="pKisiMail" ColumnName="pKisiMail" />
-                <ScalarProperty Name="pKisiTel" ColumnName="pKisiTel" />
-                <ScalarProperty Name="pKisiPlanID" ColumnName="pKisiPlanID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="planToBirims">
-            <EntityTypeMapping TypeName="SekreteryaModel.planToBirim">
-              <MappingFragment StoreEntitySet="planToBirim">
-                <ScalarProperty Name="ptbID" ColumnName="ptbID" />
-                <ScalarProperty Name="planBirimID" ColumnName="planBirimID" />
-                <ScalarProperty Name="planPlanID" ColumnName="planPlanID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="planToKisis">
-            <EntityTypeMapping TypeName="SekreteryaModel.planToKisi">
-              <MappingFragment StoreEntitySet="planToKisi">
-                <ScalarProperty Name="ptkID" ColumnName="ptkID" />
-                <ScalarProperty Name="planID" ColumnName="planID" />
-                <ScalarProperty Name="kisiID" ColumnName="kisiID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sehirs">
             <EntityTypeMapping TypeName="SekreteryaModel.sehir">
               <MappingFragment StoreEntitySet="sehir">
@@ -1074,6 +960,32 @@
               <MappingFragment StoreEntitySet="yetkiLogin">
                 <ScalarProperty Name="yetkiID" ColumnName="yetkiID" />
                 <ScalarProperty Name="yetki" ColumnName="yetki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="planToKisis">
+            <EntityTypeMapping TypeName="SekreteryaModel.planToKisi">
+              <MappingFragment StoreEntitySet="planToKisi">
+                <ScalarProperty Name="pkPlanID" ColumnName="pkPlanID" />
+                <ScalarProperty Name="pkKisiID" ColumnName="pkKisiID" />
+                <ScalarProperty Name="pkID" ColumnName="pkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plans">
+            <EntityTypeMapping TypeName="SekreteryaModel.plan">
+              <MappingFragment StoreEntitySet="plan">
+                <ScalarProperty Name="planUserID" ColumnName="planUserID" />
+                <ScalarProperty Name="planKisiID" ColumnName="planKisiID" />
+                <ScalarProperty Name="planEkBilgi" ColumnName="planEkBilgi" />
+                <ScalarProperty Name="planFullDay" ColumnName="planFullDay" />
+                <ScalarProperty Name="planisCompleted" ColumnName="planisCompleted" />
+                <ScalarProperty Name="planMekan" ColumnName="planMekan" />
+                <ScalarProperty Name="planEndTarih" ColumnName="planEndTarih" />
+                <ScalarProperty Name="planStartTarih" ColumnName="planStartTarih" />
+                <ScalarProperty Name="planKisaBilgi" ColumnName="planKisaBilgi" />
+                <ScalarProperty Name="planUzunBilgi" ColumnName="planUzunBilgi" />
+                <ScalarProperty Name="planID" ColumnName="planID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

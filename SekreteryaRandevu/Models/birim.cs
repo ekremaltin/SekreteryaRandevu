@@ -19,7 +19,6 @@ namespace SekreteryaRandevu.Models
         {
             this.kisis = new HashSet<kisi>();
             this.users = new HashSet<user>();
-            this.planToBirims = new HashSet<planToBirim>();
         }
     
         public int birimID { get; set; }
@@ -29,7 +28,5 @@ namespace SekreteryaRandevu.Models
         public virtual ICollection<kisi> kisis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<planToBirim> planToBirims { get; set; }
     }
 }

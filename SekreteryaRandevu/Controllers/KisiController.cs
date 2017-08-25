@@ -26,7 +26,7 @@ namespace SekreteryaRandevu.Controllers
             {
                 return RedirectToAction("Liste");
             }
-            var detayKisi = db.kisis.Where(k => k.kisiID == id).SingleOrDefault();
+            var detayKisi = db.kisis.Where(k => k.kisiID == id).SingleOrDefault();            
             if (detayKisi == null)
             {
                 return RedirectToAction("Liste");

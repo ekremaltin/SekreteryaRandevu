@@ -14,8 +14,11 @@ namespace SekreteryaRandevu.Models
     
     public partial class planToKisi
     {
-        public int ptkID { get; set; }
-        public Nullable<int> planID { get; set; }
-        public Nullable<int> kisiID { get; set; }
+        public int pkID { get; set; }
+        public Nullable<int> pkKisiID { get; set; }
+        public Nullable<int> pkPlanID { get; set; }
+    
+        public virtual kisi kisi { get; set; }
+        public virtual plan plan { get; set; }
     }
 }

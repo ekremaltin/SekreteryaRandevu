@@ -28,8 +28,8 @@ namespace SekreteryaRandevu.Models
         public Nullable<int> userBirimID { get; set; }
     
         public virtual birim birim { get; set; }
+        public virtual yetkiLogin yetkiLogin { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<plan> plans { get; set; }
-        public virtual yetkiLogin yetkiLogin { get; set; }
     }
 }

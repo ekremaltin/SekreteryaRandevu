@@ -17,24 +17,23 @@ namespace SekreteryaRandevu.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public plan()
         {
-            this.planKisis = new HashSet<planKisi>();
-            this.planToBirims = new HashSet<planToBirim>();
+            this.planToKisis = new HashSet<planToKisi>();
         }
     
         public int planID { get; set; }
         public string planUzunBilgi { get; set; }
         public string planKisaBilgi { get; set; }
-        public Nullable<System.DateTime> planTarih { get; set; }
+        public Nullable<System.DateTime> planStartTarih { get; set; }
+        public Nullable<System.DateTime> planEndTarih { get; set; }
         public string planMekan { get; set; }
         public Nullable<bool> planisCompleted { get; set; }
+        public Nullable<bool> planFullDay { get; set; }
         public string planEkBilgi { get; set; }
+        public Nullable<int> planKisiID { get; set; }
         public Nullable<int> planUserID { get; set; }
-        public Nullable<int> planHedefBirimID { get; set; }
     
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<planKisi> planKisis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<planToBirim> planToBirims { get; set; }
+        public virtual ICollection<planToKisi> planToKisis { get; set; }
     }
 }

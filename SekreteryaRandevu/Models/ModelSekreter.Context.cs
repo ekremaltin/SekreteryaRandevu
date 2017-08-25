@@ -31,14 +31,12 @@ namespace SekreteryaRandevu.Models
         public virtual DbSet<iletisimToKisi> iletisimToKisis { get; set; }
         public virtual DbSet<iletisimToSirket> iletisimToSirkets { get; set; }
         public virtual DbSet<kisi> kisis { get; set; }
-        public virtual DbSet<plan> plans { get; set; }
-        public virtual DbSet<planKisi> planKisis { get; set; }
-        public virtual DbSet<planToBirim> planToBirims { get; set; }
-        public virtual DbSet<planToKisi> planToKisis { get; set; }
         public virtual DbSet<sehir> sehirs { get; set; }
         public virtual DbSet<sirket> sirkets { get; set; }
         public virtual DbSet<ulke> ulkes { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<yetkiLogin> yetkiLogins { get; set; }
+        public virtual DbSet<planToKisi> planToKisis { get; set; }
+        public virtual DbSet<plan> plans { get; set; }
     }
 }
