@@ -21,6 +21,16 @@ namespace SekreteryaRandevu.Controllers
             var events = db.plans.ToList();
             return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        public JsonResult SearchKisiList(string searchKelime)
+        {
+            List<KisiSearch> searchListe = db.kisis.Where(m => m.kisiAdi.Contains(searchKelime)).Select(m => new KisiSearch
+            {
+                kisiID = m.kisiID,
+                kisiAdi = m.kisiAdi
+            }).ToList();
+
+            return new JsonResult { Data = searchListe, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
         [HttpPost]
         public JsonResult SaveEvent(plan e)

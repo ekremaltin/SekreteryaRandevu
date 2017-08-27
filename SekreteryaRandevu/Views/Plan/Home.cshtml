@@ -1,4 +1,5 @@
-﻿
+﻿<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/fullcalendar.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Home";
 }
@@ -7,44 +8,47 @@
 
 <div id="calendar"></div>
 
-<div id="myModal" class="modal fade" role="dialog">
+@*SEÇİLEN RANDEVU DETAY POP-UP*@
+<div id="myModal" class="modal fade" role="dialog"> 
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button> @* X Çarpı Kapatma*@
                 <h4 class="modal-title"><span id="eventTitle"></span></h4>
             </div>
             <div class="modal-body">
-                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                <button id="btnDelete" class="btn btn-default btn-sm pull-right"> @*Seçilen randevu silme*@
                     <span class="glyphicon glyphicon-remove"></span> Sil
                 </button>
-                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">  @*Seçilen Randevu Düzenleme*@
                     <span class="glyphicon glyphicon-pencil"></span> Düzenle
                 </button>
                 <p id="pDetails"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>  @*Seçline randevu detay pop-up penceresini kapatma*@
             </div>
         </div>
     </div>
 </div>
+
+@*YENİ RANDEVU EKLEME POP-UP*@
 <div id="myModalSave" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Save Event</h4>
+                <h4 class="modal-title">Randevu Kayıt</h4>
             </div>
             <div class="modal-body">
                 <form class="col-md-12 form-horizontal">
                     <input type="hidden" id="hdEventID" value="0" />
                     <div class="form-group">
-                        <label>Subject</label>
+                        <label>Başlık</label>
                         <input type="text" id="txtSubject" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label>Start</label>
+                        <label>Başlama Tarihi</label>
                         <div class="input-group date" id="dtp1">
                             <input type="text" id="txtStart" class="form-control" />
                             <span class="input-group-addon">
@@ -54,11 +58,11 @@
                     </div>
                     <div class="form-group">
                         <div class="checkbox">
-                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
+                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Tam Gün</label>
                         </div>
                     </div>
                     <div class="form-group" id="divEndDate" style="display:none">
-                        <label>End</label>
+                        <label>Bitiş Tarihi</label>
                         <div class="input-group date" id="dtp2">
                             <input type="text" id="txtEnd" class="form-control" />
                             <span class="input-group-addon">
@@ -67,35 +71,50 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
+                        <label>Randevu İçerik</label>
                         <textarea id="txtDescription" rows="3" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Theme Color</label>
+                        <label>Randevu Yeri</label>
+                        <input type="text" id="txtMekan" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Ek Bilgi</label>
+                        <textarea id="txtEkBilgi" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSearchKisi">Kişi Ekle</label>
+                        <input id="txtSearchKisi" class="form-control" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Randevu Renk Seçimi</label>
                         <select id="ddThemeColor" class="form-control">
-                            <option value="">Default</option>
-                            <option value="red">Red</option>
-                            <option value="blue">Blue</option>
-                            <option value="black">Black</option>
-                            <option value="green">Green</option>
+                            <option value="">Varsayılan</option>
+                            <option value="red">Kırmızı</option>
+                            <option value="blue">Mavi</option>
+                            <option value="black">Siyah</option>
+                            <option value="green">Yeşil</option>
                         </select>
                     </div>
-                    <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSave" class="btn btn-success">Kaydet</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<link href="~/Content/fullcalendar.css" rel="stylesheet" />
 @section Scripts{
 <script src="~/Scripts/moment.js"></script>
 <script src="~/Scripts/fullcalendar.js"></script>
+<script src="~/Scripts/tr.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
             var events = [];
-            FetchEventAndRenderCalendar();
+            FetchEventAndRenderCalendar();            
             function FetchEventAndRenderCalendar() {
                 events=[];
                 $.ajax({
@@ -123,6 +142,25 @@
                     },
                     error: function (error) {
                         alert('failed');
+                    }
+                })
+            }
+
+            function SearchKisi()
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Plan/SearchKisiList',
+                    datatype: 'json',
+                    data: { searchKelime: $("#txtSearchKisi").val() },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.kisiAdi, value: item.kisiAdi };
+                        }));
+
+                    },
+                    error: function (xhr,status,error) {
+                        alert("search yok");
                     }
                 })
             }
@@ -221,6 +259,24 @@
                 }
                 else {
                     $('#divEndDate').show();
+                }
+            });
+            $('#txtSearchKisi').autocomplete({
+                source: function (request,response) {
+                    $.ajax({
+                        url: '/Plan/SearchKisiList',
+                        datatype: 'json',
+                        data: { searchKelime: $("#txtSearchKisi").val() },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.kisiAdi, value: item.kisiAdi };
+                            }));
+
+                        },
+                        error: function (xhr, status, error) {
+                            alert("search yok");
+                        }
+                    });
                 }
             });
             function openAddEditForm() {
