@@ -40,15 +40,17 @@ namespace SekreteryaRandevu.Controllers
             {
                 //Update the event
                 var v = db.plans.Where(a => a.planID== e.planID).FirstOrDefault();
-                //if (v != null)
-                //{
-                //    v.Subject = e.Subject;
-                //    v.Start = e.Start;
-                //    v.End = e.End;
-                //    v.Description = e.Description;
-                //    v.IsFullDay = e.IsFullDay;
-                //    v.ThemeColor = e.ThemeColor;
-                //}
+                if (v != null)
+                {
+                    v.planKisaBilgi = e.planKisaBilgi;
+                    v.planStartTarih = e.planStartTarih;
+                    v.planEndTarih = e.planEndTarih;
+                    v.planUzunBilgi = e.planUzunBilgi;
+                    v.planFullDay = e.planFullDay;
+                    v.planColor = e.planColor;
+                    v.planMekan = e.planMekan;
+                    v.planEkBilgi = e.planEkBilgi;
+                }
             }
             else
             {

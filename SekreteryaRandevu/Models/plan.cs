@@ -31,6 +31,7 @@ namespace SekreteryaRandevu.Models
         public string planEkBilgi { get; set; }
         public Nullable<int> planKisiID { get; set; }
         public Nullable<int> planUserID { get; set; }
+        public string planColor { get; set; }
     
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

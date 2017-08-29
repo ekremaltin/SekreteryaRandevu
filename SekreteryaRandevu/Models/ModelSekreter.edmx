@@ -78,6 +78,7 @@
           <Property Name="planisCompleted" Type="bit" />
           <Property Name="planFullDay" Type="bit" />
           <Property Name="planEkBilgi" Type="nvarchar(max)" />
+          <Property Name="planColor" Type="nvarchar" MaxLength="10" />
           <Property Name="planKisiID" Type="int" />
           <Property Name="planUserID" Type="int" />
         </EntityType>
@@ -816,6 +817,7 @@
           <Property Name="planUserID" Type="Int32" />
           <NavigationProperty Name="user" Relationship="SekreteryaModel.FK_plan_user" FromRole="plan" ToRole="user" />
           <NavigationProperty Name="planToKisis" Relationship="SekreteryaModel.FK_planKisi_plan" FromRole="plan" ToRole="planToKisi" />
+          <Property Name="planColor" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_plan_user">
           <End Type="SekreteryaModel.user" Role="user" Multiplicity="0..1" />
@@ -975,6 +977,7 @@
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="SekreteryaModel.plan">
               <MappingFragment StoreEntitySet="plan">
+                <ScalarProperty Name="planColor" ColumnName="planColor" />
                 <ScalarProperty Name="planUserID" ColumnName="planUserID" />
                 <ScalarProperty Name="planKisiID" ColumnName="planKisiID" />
                 <ScalarProperty Name="planEkBilgi" ColumnName="planEkBilgi" />

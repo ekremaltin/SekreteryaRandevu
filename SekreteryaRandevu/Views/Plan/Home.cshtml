@@ -1,5 +1,6 @@
 ﻿<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Home";
 }
@@ -9,7 +10,7 @@
 <div id="calendar"></div>
 
 @*SEÇİLEN RANDEVU DETAY POP-UP*@
-<div id="myModal" class="modal fade" role="dialog"> 
+<div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -17,10 +18,12 @@
                 <h4 class="modal-title"><span id="eventTitle"></span></h4>
             </div>
             <div class="modal-body">
-                <button id="btnDelete" class="btn btn-default btn-sm pull-right"> @*Seçilen randevu silme*@
+                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                    @*Seçilen randevu silme*@
                     <span class="glyphicon glyphicon-remove"></span> Sil
                 </button>
-                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">  @*Seçilen Randevu Düzenleme*@
+                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                    @*Seçilen Randevu Düzenleme*@
                     <span class="glyphicon glyphicon-pencil"></span> Düzenle
                 </button>
                 <p id="pDetails"></p>
@@ -76,7 +79,7 @@
                     </div>
                     <div class="form-group">
                         <label>Randevu Yeri</label>
-                        <input type="text" id="txtMekan" class="form-control"/>
+                        <input type="text" id="txtMekan" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label>Ek Bilgi</label>
@@ -84,7 +87,12 @@
                     </div>
                     <div class="form-group">
                         <label for="txtSearchKisi">Kişi Ekle</label>
-                        <input id="txtSearchKisi" class="form-control" />
+                        <select id="txtSearchKisi" class="form-control" > </select>
+                        <a>Ekle</a>
+                    </div>
+                    <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+                        Result:
+                        <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
                     </div>
 
 
@@ -106,17 +114,17 @@
     </div>
 </div>
 @section Scripts{
-<script src="~/Scripts/moment.js"></script>
-<script src="~/Scripts/fullcalendar.js"></script>
-<script src="~/Scripts/tr.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/fullcalendar.js"></script>
+    <script src="~/Scripts/tr.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
             var events = [];
-            FetchEventAndRenderCalendar();            
+            FetchEventAndRenderCalendar();
             function FetchEventAndRenderCalendar() {
-                events=[];
+                events = [];
                 $.ajax({
                     type: "GET",
                     url: "/Plan/GetEvents",
@@ -127,9 +135,9 @@
                                 title: v.planKisaBilgi,
                                 description: v.planUzunBilgi,
                                 start: moment(v.planStartTarih),
-                                end: v.End != null ? moment(v.planEndTarih) : null,
+                                end: v.planEndTarih != null ? moment(v.planEndTarih) : null,
                                 place: v.planMekan,
-                                color: v.ThemeColor,
+                                color: v.planColor,
                                 allDay: v.planFullDay,
                                 isComp: v.planisCompleted,
                                 ekBilgi: v.planEkBilgi,
@@ -146,8 +154,7 @@
                 })
             }
 
-            function SearchKisi()
-            {
+            function SearchKisi() {
                 $.ajax({
                     type: 'GET',
                     url: '/Plan/SearchKisiList',
@@ -159,15 +166,15 @@
                         }));
 
                     },
-                    error: function (xhr,status,error) {
+                    error: function (xhr, status, error) {
                         alert("search yok");
                     }
                 })
             }
-            
+
 
             function GenerateCalender(events) {
-                $('#calendar').fullCalendar('destroy');             
+                $('#calendar').fullCalendar('destroy');
                 $('#calendar').fullCalendar({
                     contentHeight: 400,
                     defaultDate: new Date(),
@@ -180,7 +187,7 @@
                     //dayClick: function(){
                     //    alert('tıklandı');
                     //},
-                    eventLimit: true,   
+                    eventLimit: true,
                     eventColor: '#378006',
                     events: events,
                     eventClick: function (calEvent, jsEvent, view) {
@@ -195,8 +202,7 @@
                         $description.append($('<p/>').html('<b>Randevu Yeri:</b>' + calEvent.place));
                         $description.append($('<p/>').html('<b>Randevu Ek Bilgi:</b>' + calEvent.ekBilgi));
                         $('#myModal #pDetails').empty().html($description);
-
-                        $('#myModal').modal(); //??
+                        $('#myModal').modal();
                     },
                     selectable: true,
                     select: function (start, end) {
@@ -262,37 +268,32 @@
                 }
             });
             $('#txtSearchKisi').autocomplete({
-                source: function (request,response) {
+                source: function (request, response) {
+                    var kisiList = $("#txtSearchKisi");
                     $.ajax({
                         url: '/Plan/SearchKisiList',
                         datatype: 'json',
                         data: { searchKelime: $("#txtSearchKisi").val() },
                         success: function (data) {
-                            response($.map(data, function (item) {
-                                return { label: item.kisiAdi, value: item.kisiAdi };
-                            }));
-
+                            $.each(data, function (index, option) {
+                                kisiList.append('<option value=' + option.kisiID + '>' + option.kisiAdi + '</option>')
+                            });
+                            //response($.map(data, function (item) {
+                            //    return {
+                            //        label: item.kisiAdi, value: item.kisiAdi, id: item.kisiID
+                            //    };
+                            //}));
                         },
                         error: function (xhr, status, error) {
                             alert("search yok");
                         }
                     });
-                }
+                },
+                //select: function (event, ui) {
+                    
+                //}
+
             });
-            function openAddEditForm() {
-                if (selectedEvent != null) {
-                    $('#hdEventID').val(selectedEvent.eventID);
-                    $('#txtSubject').val(selectedEvent.title);
-                    $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
-                    $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
-                    $('#chkIsFullDay').change();
-                    $('#txtEnd').val(selectedEvent.end != null ? selectedEvent.end.format('DD/MM/YYYY HH:mm A') : '');
-                    $('#txtDescription').val(selectedEvent.description);
-                    $('#ddThemeColor').val(selectedEvent.color);
-                }
-                $('#myModal').modal('hide');
-                $('#myModalSave').modal();
-            }
             $('#btnSave').click(function () {
                 //Validation/
                 if ($('#txtSubject').val().trim() == "") {
@@ -317,21 +318,42 @@
                 }
 
                 var data = {
-                    EventID: $('#hdEventID').val(),
-                    Subject: $('#txtSubject').val().trim(),
-                    Start: $('#txtStart').val().trim(),
-                    End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
-                    Description: $('#txtDescription').val(),
-                    ThemeColor: $('#ddThemeColor').val(),
-                    IsFullDay: $('#chkIsFullDay').is(':checked')
+                    planID: $('#hdEventID').val(),
+                    planKisaBilgi: $('#txtSubject').val().trim(),
+                    planStartTarih: $('#txtStart').val().trim(),
+                    planEndTarih: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
+                    planUzunBilgi: $('#txtDescription').val(),
+                    planColor: $('#ddThemeColor').val(),
+                    planFullDay: $('#chkIsFullDay').is(':checked'),
+                    planMekan: $('#txtMekan').val().trim(),
+                    planEkBilgi: $('#txtEkBilgi').val(),
+                    planKisiID: $('#txtSearchKisi').val()
                 }
                 SaveEvent(data);
-                // call function for submit data to the server 
+                // call function for submit data to the server
             })
+           
+            function openAddEditForm() {
+                if (selectedEvent != null) {
+                    $('#hdEventID').val(selectedEvent.eventID);
+                    $('#txtSubject').val(selectedEvent.title);
+                    $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+                    $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
+                    $('#chkIsFullDay').change();
+                    $('#txtEnd').val(selectedEvent.end != null ? selectedEvent.end.format('DD/MM/YYYY HH:mm A') : '');
+                    $('#txtDescription').val(selectedEvent.description);
+                    $('#ddThemeColor').val(selectedEvent.color);
+                    $('#txtMekan').val(selectedEvent.place);
+                    $('#txtEkBilgi').val(selectedEvent.ekBilgi);
+                    $('#txtSearchKisi').val(selectedEvent.olusturan);
+                }
+                $('#myModal').modal('hide');
+                $('#myModalSave').modal();
+            }            
             function SaveEvent(data) {
                 $.ajax({
                     type: "POST",
-                    url: '/home/SaveEvent',
+                    url: '/Plan/SaveEvent',
                     data: data,
                     success: function (data) {
                         if (data.status) {
@@ -346,6 +368,6 @@
                 })
             }
         })
-</script>
+    </script>
 
 }
