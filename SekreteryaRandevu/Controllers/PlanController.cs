@@ -75,8 +75,6 @@ namespace SekreteryaRandevu.Controllers
             return new JsonResult { Data = new { status = status } };
         }
 
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
