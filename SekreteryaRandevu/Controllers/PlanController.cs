@@ -13,23 +13,52 @@ namespace SekreteryaRandevu.Controllers
         // GET: Plan
         public ActionResult Home()
         {
+            ViewBag.kisiListe = new SelectList(db.kisis, "kisiID", "kisiAdi");
             return View();
         }
         
+        [HttpGet]
         public JsonResult GetEvents()
         {
-            var events = db.plans.ToList();
-            return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-        public JsonResult SearchKisiList(string searchKelime)
-        {
-            List<KisiSearch> searchListe = db.kisis.Where(m => m.kisiAdi.Contains(searchKelime)).Select(m => new KisiSearch
-            {
-                kisiID = m.kisiID,
-                kisiAdi = m.kisiAdi
-            }).ToList();
+            var plans = db.plans;
+            List<planToKisi> k = new List<planToKisi>();
+            var c = db.planToKisis.Select(m=> new getKatilimci {
+                pkID=m.pkID,
+                pkKisiID=m.pkKisiID,
+                pkPlanID=m.pkPlanID,
+                pkisSource=m.pkisSource
+            });
 
-            return new JsonResult { Data = searchListe, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var a = db.plans.Select(m => new getPlan
+            {
+                planID = m.planID,
+                planKisaBilgi = m.planKisaBilgi,
+                planUzunBilgi = m.planUzunBilgi,
+                planColor = m.planColor,
+                planEndTarih = m.planEndTarih,
+                planFullDay = m.planFullDay,
+                planEkBilgi = m.planEkBilgi,
+                planisCompleted = m.planisCompleted,
+                planMekan = m.planMekan,
+                planStartTarih = m.planStartTarih,
+                planUserID = m.planUserID,
+                planToKisis = c.ToList()                
+            });
+            return Json(a, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult SearchKisiList()
+        {
+            //List<KisiSearch> searchListe = db.kisis.Where(m => m.kisiAdi.Contains(searchKelime)).Select(m => new KisiSearch
+            //{
+            //    kisiID = m.kisiID,
+            //    kisiAdi = m.kisiAdi
+            //}).ToList();
+
+            List<KisiSearch> liste = db.kisis.Select(m => new KisiSearch {
+                kisiID = m.kisiID,
+                kisiAdi= m.kisiAdi
+            }).ToList();
+            return Json (liste, JsonRequestBehavior.AllowGet );
         }
 
         [HttpPost]
@@ -50,6 +79,7 @@ namespace SekreteryaRandevu.Controllers
                     v.planColor = e.planColor;
                     v.planMekan = e.planMekan;
                     v.planEkBilgi = e.planEkBilgi;
+                    v.planToKisis = e.planToKisis;
                 }
             }
             else

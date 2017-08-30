@@ -79,7 +79,6 @@
           <Property Name="planFullDay" Type="bit" />
           <Property Name="planEkBilgi" Type="nvarchar(max)" />
           <Property Name="planColor" Type="nvarchar" MaxLength="10" />
-          <Property Name="planKisiID" Type="int" />
           <Property Name="planUserID" Type="int" />
         </EntityType>
         <EntityType Name="planToKisi">
@@ -89,6 +88,7 @@
           <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="pkKisiID" Type="int" />
           <Property Name="pkPlanID" Type="int" />
+          <Property Name="pkisSource" Type="bit" />
         </EntityType>
         <EntityType Name="sehir">
           <Key>
@@ -787,6 +787,7 @@
           <Property Name="pkPlanID" Type="Int32" />
           <NavigationProperty Name="kisi" Relationship="SekreteryaModel.FK_planToKisi_kisi" FromRole="planToKisi" ToRole="kisi" />
           <NavigationProperty Name="plan" Relationship="SekreteryaModel.FK_planKisi_plan" FromRole="planToKisi" ToRole="plan" />
+          <Property Name="pkisSource" Type="Boolean" />
         </EntityType>
         <Association Name="FK_planToKisi_kisi">
           <End Type="SekreteryaModel.kisi" Role="kisi" Multiplicity="0..1" />
@@ -813,7 +814,6 @@
           <Property Name="planisCompleted" Type="Boolean" />
           <Property Name="planFullDay" Type="Boolean" />
           <Property Name="planEkBilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="planKisiID" Type="Int32" />
           <Property Name="planUserID" Type="Int32" />
           <NavigationProperty Name="user" Relationship="SekreteryaModel.FK_plan_user" FromRole="plan" ToRole="user" />
           <NavigationProperty Name="planToKisis" Relationship="SekreteryaModel.FK_planKisi_plan" FromRole="plan" ToRole="planToKisi" />
@@ -968,6 +968,7 @@
           <EntitySetMapping Name="planToKisis">
             <EntityTypeMapping TypeName="SekreteryaModel.planToKisi">
               <MappingFragment StoreEntitySet="planToKisi">
+                <ScalarProperty Name="pkisSource" ColumnName="pkisSource" />
                 <ScalarProperty Name="pkPlanID" ColumnName="pkPlanID" />
                 <ScalarProperty Name="pkKisiID" ColumnName="pkKisiID" />
                 <ScalarProperty Name="pkID" ColumnName="pkID" />
@@ -979,7 +980,6 @@
               <MappingFragment StoreEntitySet="plan">
                 <ScalarProperty Name="planColor" ColumnName="planColor" />
                 <ScalarProperty Name="planUserID" ColumnName="planUserID" />
-                <ScalarProperty Name="planKisiID" ColumnName="planKisiID" />
                 <ScalarProperty Name="planEkBilgi" ColumnName="planEkBilgi" />
                 <ScalarProperty Name="planFullDay" ColumnName="planFullDay" />
                 <ScalarProperty Name="planisCompleted" ColumnName="planisCompleted" />

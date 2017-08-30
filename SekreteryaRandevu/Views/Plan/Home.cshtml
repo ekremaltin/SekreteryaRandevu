@@ -1,123 +1,186 @@
 ﻿<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/fullcalendar.css" rel="stylesheet" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+
 @{
     ViewBag.Title = "Takvim";
 }
 
 <h2>Randevu</h2>
 
-<div id="calendar"></div>
-
-@*SEÇİLEN RANDEVU DETAY POP-UP*@
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button> @* X Çarpı Kapatma*@
-                <h4 class="modal-title"><span id="eventTitle"></span></h4>
-            </div>
-            <div class="modal-body">
-                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
-                    @*Seçilen randevu silme*@
-                    <span class="glyphicon glyphicon-remove"></span> Sil
-                </button>
-                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
-                    @*Seçilen Randevu Düzenleme*@
-                    <span class="glyphicon glyphicon-pencil"></span> Düzenle
-                </button>
-                <p id="pDetails"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>  @*Seçline randevu detay pop-up penceresini kapatma*@
-            </div>
-        </div>
-    </div>
-</div>
-
-@*YENİ RANDEVU EKLEME POP-UP*@
-<div id="myModalSave" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Randevu Kayıt</h4>
-            </div>
-            <div class="modal-body">
-                <form class="col-md-12 form-horizontal">
-                    <input type="hidden" id="hdEventID" value="0" />
-                    <div class="form-group">
-                        <label>Başlık</label>
-                        <input type="text" id="txtSubject" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label>Başlama Tarihi</label>
-                        <div class="input-group date" id="dtp1">
-                            <input type="text" id="txtStart" class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Tam Gün</label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="divEndDate" style="display:none">
-                        <label>Bitiş Tarihi</label>
-                        <div class="input-group date" id="dtp2">
-                            <input type="text" id="txtEnd" class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Randevu İçerik</label>
-                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Randevu Yeri</label>
-                        <input type="text" id="txtMekan" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label>Ek Bilgi</label>
-                        <textarea id="txtEkBilgi" rows="3" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="txtSearchKisi">Kişi Ekle</label>
-                        <select id="txtSearchKisi" class="form-control" > </select>
-                        <a>Ekle</a>
-                    </div>
-                    <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-                        Result:
-                        <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label>Randevu Renk Seçimi</label>
-                        <select id="ddThemeColor" class="form-control">
-                            <option value="">Varsayılan</option>
-                            <option value="red">Kırmızı</option>
-                            <option value="blue">Mavi</option>
-                            <option value="black">Siyah</option>
-                            <option value="green">Yeşil</option>
-                        </select>
-                    </div>
-                    <button type="button" id="btnSave" class="btn btn-success">Kaydet</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
-                </form>
+<div id="tabs">
+    @*SEÇİLEN RANDEVU DETAY POP-UP*@
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button> @* X Çarpı Kapatma*@
+                    <h4 class="modal-title"><span id="eventTitle"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                        @*Seçilen randevu silme*@
+                        <span class="glyphicon glyphicon-remove"></span> Sil
+                    </button>
+                    <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                        @*Seçilen Randevu Düzenleme*@
+                        <span class="glyphicon glyphicon-pencil"></span> Düzenle
+                    </button>
+                    <p id="pDetails"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>  @*Seçline randevu detay pop-up penceresini kapatma*@
+                </div>
             </div>
         </div>
     </div>
+    @*YENİ RANDEVU EKLEME POP-UP*@
+    <div id="myModalSave" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Randevu Kayıt</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="col-md-12 form-horizontal">
+                        <input type="hidden" id="hdEventID" value="0" />
+                        <div class="form-group">
+                            <label id="kimForm"></label>
+                        </div>
+                        <div class="form-group">
+                            <label>Başlık</label>
+                            <input type="text" id="txtSubject" class="form-control" placeholder="Başlık Giriniz"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Başlama Tarihi</label>
+                            <div class="input-group date" id="dtp1">
+                                <input type="text" id="txtStart" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Tam Gün</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="divEndDate" style="display:none">
+                            <label>Bitiş Tarihi</label>
+                            <div class="input-group date" id="dtp2">
+                                <input type="text" id="txtEnd" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Randevu İçerik</label>
+                            <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Randevu Yeri</label>
+                            <input type="text" id="txtMekan" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Ek Bilgi</label>
+                            <textarea id="txtEkBilgi" rows="3" class="form-control"></textarea>
+                        </div>
+
+
+                        @*<div class="form-group">
+                                <label for="txtSearchKisi">Kişi Ekle</label>
+                                <select id="txtSearchKisi" class="form-control"> </select>
+                                <a>Ekle</a>
+                            </div>
+                            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+                                Result:
+                                <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+                            </div>*@
+
+
+                        <div class="form-group">
+                            <label>Toplantı Katılımcıları</label></br>
+                            <select id="framework" name="framework[]" multiple="multiple" class="form-control">
+                                @foreach (var item in ViewBag.kisiListe)
+                                {
+                                    <option value=@item.Value>@item.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Randevu Renk Seçimi</label>
+                            <select id="ddThemeColor" class="form-control">
+                                <option value="">Varsayılan</option>
+                                <option value="red">Kırmızı</option>
+                                <option value="blue">Mavi</option>
+                                <option value="black">Siyah</option>
+                                <option value="green">Yeşil</option>
+                            </select>
+                        </div>
+                        <button type="button" id="btnSave" class="btn btn-success">Kaydet</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul>
+        <li><a href="#tab1" id="b">Başkan</a></li>
+        <li><a href="#tab2" id="by1">Başkan Yardımcısı</a></li>
+        <li><a href="#tab3" id="by2">Başkan Yardımcısı</a></li>
+        <li><a href="#tab4" id="by3">+</a></li>
+    </ul>
+    <div id="tab1">
+        <div id="calendar"></div>
+    </div>
+    <div id="tab2">
+        <div id="calendar"></div>
+    </div>
+    <div id="tab3">
+        <div id="calendar"></div>
+    </div>
+    <div id="tab4">
+        <div id="calendar"></div>
+    </div>
 </div>
+
+
+
 @section Scripts{
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/fullcalendar.js"></script>
     <script src="~/Scripts/tr.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="~/Scripts/jquery-ui.js"></script> 
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/calendar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <script>
+        $('#tabs').tabs()
+        $('.ui - tabs - anchor').click(function () {
+            var btn_id = $(this).attr('id');
+            $('#hdEventID').val(selectedEvent.eventID);
+        })
+        $('#framework').multiselect({
+            nonSelectedText: 'Toplantıya Katımlımcı Ekleyiniz',
+            includeSelectAllOption: true, //Tüm seçim
+            selectAllJustVisible: false, //Görünmeyenlerinde tümünün seçimi
+            selectAllText: 'Herkesi seç!',
+            enableClickableOptGroups: true, //Departman altı gruplandırma
+            enableFiltering: true, //Arama aktif etme
+            enableCaseInsensitiveFiltering: true
+        })
+        $('#btnSave1').click(function () {
+            var list = $('#framework').val();
+            var a = [];
+            $.each($('#framework').val(), function (i, v) {
+                a.push(v);
+            });
+            alert(a);
+        })
+        
+    </script>
 }

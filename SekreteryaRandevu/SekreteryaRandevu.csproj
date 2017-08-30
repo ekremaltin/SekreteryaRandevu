@@ -143,6 +143,8 @@
     <Compile Include="Models\birim.cs">
       <DependentUpon>ModelSekreter.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getKatilimci.cs" />
+    <Compile Include="Models\getPlan.cs" />
     <Compile Include="Models\iletisim.cs">
       <DependentUpon>ModelSekreter.tt</DependentUpon>
     </Compile>

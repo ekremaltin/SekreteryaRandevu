@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
     var events = [];
+
+
     FetchEventAndRenderCalendar();
     function FetchEventAndRenderCalendar() {
         events = [];
@@ -19,37 +21,18 @@
                         allDay: v.planFullDay,
                         isComp: v.planisCompleted,
                         ekBilgi: v.planEkBilgi,
-                        kimin: v.planKisiID,
-                        olusturan: v.planUserID
+                        olusturan: v.planUserID,
+                        kisiler: v.planToKisis
                     });
                 })
 
                 GenerateCalender(events);
             },
             error: function (error) {
-                alert('failed');
+                alert('olmadı');
             }
         })
     }
-
-    function SearchKisi() {
-        $.ajax({
-            type: 'GET',
-            url: '/Plan/SearchKisiList',
-            datatype: 'json',
-            data: { searchKelime: $("#txtSearchKisi").val() },
-            success: function (data) {
-                response($.map(data, function (item) {
-                    return { label: item.kisiAdi, value: item.kisiAdi };
-                }));
-
-            },
-            error: function (xhr, status, error) {
-                alert("search yok");
-            }
-        })
-    }
-
 
     function GenerateCalender(events) {
         $('#calendar').fullCalendar('destroy');
@@ -107,8 +90,7 @@
                     planColor: event.color,
                     planFullDay: event.allDay,
                     planMekan: event.place,
-                    planEkBilgi:event.ekBilgi,
-                    planKisiID: event.kimin
+                    planEkBilgi: event.ekBilgi,
                 };
                 SaveEvent(data);
             }
@@ -148,33 +130,31 @@
             $('#divEndDate').show();
         }
     });
-    $('#txtSearchKisi').autocomplete({
-        source: function (request, response) {
-            var kisiList = $("#txtSearchKisi");
-            $.ajax({
-                url: '/Plan/SearchKisiList',
-                datatype: 'json',
-                data: { searchKelime: $("#txtSearchKisi").val() },
-                success: function (data) {
-                    $.each(data, function (index, option) {
-                        kisiList.append('<option value=' + option.kisiID + '>' + option.kisiAdi + '</option>')
-                    });
-                    //response($.map(data, function (item) {
-                    //    return {
-                    //        label: item.kisiAdi, value: item.kisiAdi, id: item.kisiID
-                    //    };
-                    //}));
-                },
-                error: function (xhr, status, error) {
-                    alert("search yok");
-                }
-            });
-        },
-        //select: function (event, ui) {
 
-        //}
+    //$('#txtSearchKisi').autocomplete({
+    //    source: function (request, response) {
+    //        var kisiList = $("#txtSearchKisi");
+    //        $.ajax({
+    //            url: '/Plan/SearchKisiList',
+    //            datatype: 'json',
+    //            data: { searchKelime: $("#txtSearchKisi").val() },
+    //            success: function (data) {
+    //                $.each(data, function (index, option) {
+    //                    kisiList.append('<option value=' + option.kisiID + '>' + option.kisiAdi + '</option>')
+    //                });
+    //                response($.map(data, function (item) {
+    //                    return {
+    //                        label: item.kisiAdi, value: item.kisiAdi, id: item.kisiID
+    //                    };
+    //                }));
+    //            },
+    //            error: function (xhr, status, error) {
+    //                alert("search yok");
+    //            }
+    //        });
+    //    }       
+    //});
 
-    });
     $('#btnSave').click(function () {
         //Validation/
         if ($('#txtSubject').val().trim() == "") {
@@ -197,7 +177,15 @@
                 return;
             }
         }
-
+        var p = [];
+        $.each($('#framework').val(), function (i, v) {
+            p.push({
+                pkID:0,
+                pkKisiID: v,
+                pkPlanID: $('#hdEventID').val(),
+                pkisSource: 0
+            })
+        });
         var data = {
             planID: $('#hdEventID').val(),
             planKisaBilgi: $('#txtSubject').val().trim(),
@@ -208,7 +196,7 @@
             planFullDay: $('#chkIsFullDay').is(':checked'),
             planMekan: $('#txtMekan').val().trim(),
             planEkBilgi: $('#txtEkBilgi').val(),
-            planKisiID: $('#txtSearchKisi').val()
+            planToKisis: p
         }
         SaveEvent(data);
         // call function for submit data to the server
@@ -216,6 +204,7 @@
 
     function openAddEditForm() {
         if (selectedEvent != null) {
+            //$('#kimForm').html(btn_id);
             $('#hdEventID').val(selectedEvent.eventID);
             $('#txtSubject').val(selectedEvent.title);
             $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
@@ -248,4 +237,5 @@
             }
         })
     }
+
 })

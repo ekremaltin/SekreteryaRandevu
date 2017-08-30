@@ -29,7 +29,6 @@ namespace SekreteryaRandevu.Models
         public Nullable<bool> planisCompleted { get; set; }
         public Nullable<bool> planFullDay { get; set; }
         public string planEkBilgi { get; set; }
-        public Nullable<int> planKisiID { get; set; }
         public Nullable<int> planUserID { get; set; }
         public string planColor { get; set; }
     

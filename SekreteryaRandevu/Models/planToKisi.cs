@@ -17,6 +17,7 @@ namespace SekreteryaRandevu.Models
         public int pkID { get; set; }
         public Nullable<int> pkKisiID { get; set; }
         public Nullable<int> pkPlanID { get; set; }
+        public Nullable<bool> pkisSource { get; set; }
     
         public virtual kisi kisi { get; set; }
         public virtual plan plan { get; set; }
