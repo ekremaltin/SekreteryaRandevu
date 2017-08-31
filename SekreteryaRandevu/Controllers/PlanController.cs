@@ -20,13 +20,12 @@ namespace SekreteryaRandevu.Controllers
         [HttpGet]
         public JsonResult GetEvents()
         {
-            var plans = db.plans;
-            List<planToKisi> k = new List<planToKisi>();
             var c = db.planToKisis.Select(m=> new getKatilimci {
                 pkID=m.pkID,
                 pkKisiID=m.pkKisiID,
                 pkPlanID=m.pkPlanID,
-                pkisSource=m.pkisSource
+                pkisSource=m.pkisSource,
+                pkKisiAdi= m.kisi.kisiAdi                
             });
 
             var a = db.plans.Select(m => new getPlan
@@ -42,7 +41,7 @@ namespace SekreteryaRandevu.Controllers
                 planMekan = m.planMekan,
                 planStartTarih = m.planStartTarih,
                 planUserID = m.planUserID,
-                planToKisis = c.ToList()                
+                planToKisis = c.Where(k=>k.pkPlanID== m.planID).ToList()               
             });
             return Json(a, JsonRequestBehavior.AllowGet);
         }
@@ -69,8 +68,32 @@ namespace SekreteryaRandevu.Controllers
             {
                 //Update the event
                 var v = db.plans.Where(a => a.planID== e.planID).FirstOrDefault();
+                var ptk = db.planToKisis.Where(m => m.pkPlanID == e.planID).ToList();
+                
                 if (v != null)
                 {
+                    if (e.planToKisis.Count()==0)
+                    {
+                        foreach (var item in ptk)
+                        {
+                            db.planToKisis.Remove(item);
+                        }
+                    }
+                    else
+                    {
+                        if (e.planToKisis.ToList()[0].pkID == 0)
+                        {
+                            foreach (var item in ptk)
+                            {
+                                db.planToKisis.Remove(item);
+                            }
+                            foreach (var item in e.planToKisis)
+                            {
+                                db.planToKisis.Add(item);
+                            }
+                        }
+                    }
+                    
                     v.planKisaBilgi = e.planKisaBilgi;
                     v.planStartTarih = e.planStartTarih;
                     v.planEndTarih = e.planEndTarih;
@@ -78,8 +101,7 @@ namespace SekreteryaRandevu.Controllers
                     v.planFullDay = e.planFullDay;
                     v.planColor = e.planColor;
                     v.planMekan = e.planMekan;
-                    v.planEkBilgi = e.planEkBilgi;
-                    v.planToKisis = e.planToKisis;
+                    v.planEkBilgi = e.planEkBilgi;                    
                 }
             }
             else

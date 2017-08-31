@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     var events = [];
 
-
     FetchEventAndRenderCalendar();
     function FetchEventAndRenderCalendar() {
         events = [];
@@ -22,7 +21,8 @@
                         isComp: v.planisCompleted,
                         ekBilgi: v.planEkBilgi,
                         olusturan: v.planUserID,
-                        kisiler: v.planToKisis
+                        kisiler: v.planToKisis,
+                       
                     });
                 })
 
@@ -33,7 +33,20 @@
             }
         })
     }
-
+    function getKisiAd(kisi) {
+        var isimler = [];
+        for (var i = 0; i < kisi.length; i++) {
+           isimler.push(kisi[i].pkKisiAdi);
+        }        
+        return isimler;
+    }
+    function getKisiID(kisi) {
+        var idlist = [];
+        for (var i = 0; i < kisi.length; i++) {
+            idlist.push(kisi[i].pkKisiID);
+        }
+        return idlist;
+    }
     function GenerateCalender(events) {
         $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
@@ -62,6 +75,7 @@
                 $description.append($('<p/>').html('<b>Randevu Açıklama:</b>' + calEvent.description));
                 $description.append($('<p/>').html('<b>Randevu Yeri:</b>' + calEvent.place));
                 $description.append($('<p/>').html('<b>Randevu Ek Bilgi:</b>' + calEvent.ekBilgi));
+                $description.append($('<p/>').html('<b>Katılımcılar:</b>' + getKisiAd(calEvent.kisiler)));
                 $('#myModal #pDetails').empty().html($description);
                 $('#myModal').modal();
             },
@@ -74,7 +88,8 @@
                     start: start,
                     end: end,
                     allDay: false,
-                    color: ''
+                    color: '',
+                    kisiler:''
                 };
                 openAddEditForm();
                 $('#calendar').fullCalendar('unselect');
@@ -91,6 +106,7 @@
                     planFullDay: event.allDay,
                     planMekan: event.place,
                     planEkBilgi: event.ekBilgi,
+                    planToKisis: event.kisiler
                 };
                 SaveEvent(data);
             }
@@ -160,7 +176,7 @@
         if ($('#txtSubject').val().trim() == "") {
             alert('Subject required');
             return;
-        }
+        } 
         if ($('#txtStart').val().trim() == "") {
             alert('Start date required');
             return;
@@ -178,14 +194,16 @@
             }
         }
         var p = [];
-        $.each($('#framework').val(), function (i, v) {
-            p.push({
-                pkID:0,
-                pkKisiID: v,
-                pkPlanID: $('#hdEventID').val(),
-                pkisSource: 0
-            })
-        });
+        if ($('#framework').val()!=null) {
+            $.each($('#framework').val(), function (i, v) {
+                p.push({
+                    pkID: 0,
+                    pkKisiID: v,
+                    pkPlanID: $('#hdEventID').val(),
+                    pkisSource: 0
+                })
+            });
+        }       
         var data = {
             planID: $('#hdEventID').val(),
             planKisaBilgi: $('#txtSubject').val().trim(),
@@ -215,7 +233,7 @@
             $('#ddThemeColor').val(selectedEvent.color);
             $('#txtMekan').val(selectedEvent.place);
             $('#txtEkBilgi').val(selectedEvent.ekBilgi);
-            $('#txtSearchKisi').val(selectedEvent.olusturan);
+            $('#framework').multiselect('select', getKisiID(selectedEvent.kisiler));
         }
         $('#myModal').modal('hide');
         $('#myModalSave').modal();

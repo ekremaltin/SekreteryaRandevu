@@ -226,7 +226,7 @@
       <DependentUpon>ModelSekreter.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\calendar.js" />
+    <Content Include="Scripts\ekFullCal.js" />
     <Content Include="Scripts\cascadingUS.js" />
     <Content Include="Scripts\dynamicIletisim.js" />
     <Content Include="Scripts\dinamikAdres.js" />
