@@ -21,13 +21,6 @@ namespace SekreteryaRandevu.Controllers
         [HttpPost]
         public JsonResult GetEvents(int? id)
         {
-            //var c = db.planToKisis.Select(m=> new getKatilimci {
-            //    pkID=m.pkID,
-            //    pkKisiID=m.pkKisiID,
-            //    pkPlanID=m.pkPlanID,
-            //    pkisSource=m.pkisSource,
-            //    pkKisiAdi= m.kisi.kisiAdi                
-            //});
             var ce = db.planToKisis.Where(m=>m.pkKisiID==id).Select(m => new getKatilimci
             {
                 pkID = m.pkID,
@@ -36,45 +29,36 @@ namespace SekreteryaRandevu.Controllers
                 pkisSource = m.pkisSource,
                 pkKisiAdi = m.kisi.kisiAdi
             });
-            //var a = db.plans.Select(m => new getPlan
-            //{
-            //    planID = m.planID,
-            //    planKisaBilgi = m.planKisaBilgi,
-            //    planUzunBilgi = m.planUzunBilgi,
-            //    planColor = m.planColor,
-            //    planEndTarih = m.planEndTarih,
-            //    planFullDay = m.planFullDay,
-            //    planEkBilgi = m.planEkBilgi,
-            //    planisCompleted = m.planisCompleted,
-            //    planMekan = m.planMekan,
-            //    planStartTarih = m.planStartTarih,
-            //    planUserID = m.planUserID,
-            //    planToKisis = c.Where(k=>k.pkPlanID== m.planID).ToList()               
-            //});
-            kisi kisi = db.kisis.Where(m => m.kisiID == id).SingleOrDefault();            
-            List<getPlan> liste = new List<getPlan>();
-            getPlan temp = new getPlan();
-            var fe = kisi.planToKisis;
-            foreach (var item in fe)
+            List<getPlan> planList = new List<getPlan>();
+            foreach (var item in ce)
             {
-                temp.planID = item.plan.planID;
-                temp.planKisaBilgi = item.plan.planKisaBilgi;
-                temp.planUzunBilgi = item.plan.planUzunBilgi;
-                temp.planColor = item.plan.planColor;
-                temp.planEndTarih = item.plan.planEndTarih;
-                temp.planStartTarih = item.plan.planStartTarih;
-                temp.planFullDay = item.plan.planFullDay;
-                temp.planEkBilgi = item.plan.planEkBilgi;
-                temp.planisCompleted = item.plan.planisCompleted;
-                temp.planMekan = item.plan.planMekan;
-                temp.planUserID = item.plan.planUserID;
-                temp.planToKisis = ce.Where(k=>k.pkPlanID==item.pkPlanID).ToList();                
-                liste.Add(temp);
-            }   
-            return Json(liste, JsonRequestBehavior.AllowGet);
+                planList.Add(db.plans.Where(m => m.planID == item.pkPlanID).Select(m => new getPlan {
+                    planID = m.planID,
+                    planKisaBilgi = m.planKisaBilgi,
+                    planUzunBilgi = m.planUzunBilgi,
+                    planColor = m.planColor,
+                    planEndTarih = m.planEndTarih,
+                    planFullDay = m.planFullDay,
+                    planEkBilgi = m.planEkBilgi,
+                    planisCompleted = m.planisCompleted,
+                    planMekan = m.planMekan,
+                    planStartTarih = m.planStartTarih,
+                    planUserID = m.planUserID,
+                    planToKisis = m.planToKisis.Select(k => new getKatilimci {
+                        pkID = k.pkID,
+                        pkKisiID = k.pkKisiID,
+                        pkPlanID = k.pkPlanID,
+                        pkisSource = k.pkisSource,
+                        pkKisiAdi = k.kisi.kisiAdi
+                    }).ToList()
+                }).FirstOrDefault());
+            }
+            var pListe = planList.GroupBy(a => a.planID).Select(a => a.FirstOrDefault());
+            return Json(pListe, JsonRequestBehavior.AllowGet);
         }
         public JsonResult SearchKisiList()
         {
+            
             //List<KisiSearch> searchListe = db.kisis.Where(m => m.kisiAdi.Contains(searchKelime)).Select(m => new KisiSearch
             //{
             //    kisiID = m.kisiID,

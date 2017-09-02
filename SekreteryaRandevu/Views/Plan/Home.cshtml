@@ -44,7 +44,13 @@
                     <form class="col-md-12 form-horizontal">
                         <input type="hidden" id="hdEventID" value="0" />
                         <div class="form-group">
-                            <label id="kimForm"></label>
+                            <label>Randevu Sahipleri</label><br>
+                            <select id="framework3" name="framework3[]" multiple="multiple" class="form-control">
+                                @foreach (var item in ViewBag.yonetimList)
+                                {
+                                    <option value=@item.Value>@item.Text</option>
+                                }
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Başlık</label>
@@ -99,7 +105,7 @@
 
 
                         <div class="form-group">
-                            <label>Toplantı Katılımcıları</label></br>
+                            <label>Toplantı Katılımcıları</label><br>
                             <select id="framework" name="framework[]" multiple="multiple" class="form-control">
                                 @foreach (var item in ViewBag.kisiListe)
                                 {
@@ -159,22 +165,23 @@
     </div>
 
     <ul id="tabsUL">
-        <li id="sb1" ><a href="#tab1"><input type="hidden" id="hdTabID" />Başkan</a></li>
-        <li id="sby2"><a href="#tab2" ><input type="hidden" id="hdTabID2" />Başkan Yardımcısı</a></li>
-        <li id="sby3"><a href="#tab3" ><input type="hidden" id="hdTabID3" />Başkan Yardımcısı</a></li>
+        <li id="sb1" ><a href="#tab1"><input type="hidden" id="22" />Başkan</a></li>
+        <li id="sby2"><a href="#tab2" ><input type="hidden" id="1026" />Başkan Yardımcısı</a></li>
+        <li id="sby3"><a href="#tab3" ><input type="hidden" id="22" />Başkan Yardımcısı</a></li>
         <li id="btnTab" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab"><a class="ui-tabs-anchor">+</a></li>
     </ul>
     <div id="tab1">
         <div id="calendar"></div>
     </div>
     <div id="tab2"> 
-        tab2
+        <div id="calendar"></div>
     </div>
     <div id="tab3">
-        tab3
+        <div id="calendar"></div>
     </div>
 </div>
-<input type="text" id="denee" value=""/>
+<input type="text" id="kaynakKisiID" value="1008"/>
+<input type="text" id="whichTab" value="#tab1 #calendar" />
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
@@ -183,74 +190,13 @@
 
 
 @section Scripts{
+    
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/fullcalendar.js"></script>
     <script src="~/Scripts/tr.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/ekFullCal.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-    <script>
-        $('#tabs').tabs()
-        $('li[id=btnTab]').click(function () {
-            var btn_id = $(this).attr('id');
-            //$('#framework2').multiselect('select', []);
-            $('#txtTabName').val("");
-            $("#NewTabsPerson").modal("show");
-            //$('#hdEventID').val(selectedEvent.eventID);
-        })       
-        $(document).on('click', 'li[id^=sb]', function (e) {
-            var tabKisiID = $(this).children().children().attr('id');
-            FetchEventAndRenderCalendar(tabKisiID);
-            $('#denee').val(tabKisiID);
-
-        })
-        $('#framework').multiselect({
-            nonSelectedText: 'Toplantıya Katımlımcı Ekleyiniz',
-            includeSelectAllOption: true, //Tüm seçim
-            selectAllJustVisible: false, //Görünmeyenlerinde tümünün seçimi
-            selectAllText: 'Herkesi seç!',
-            enableClickableOptGroups: true, //Departman altı gruplandırma
-            enableFiltering: true, //Arama aktif etme
-            enableCaseInsensitiveFiltering: true
-        })
-        $('#framework2').multiselect({
-            nonSelectedText: 'Randevu Sistem Kişileri',
-            includeSelectAllOption: true, //Tüm seçim
-            selectAllJustVisible: false, //Görünmeyenlerinde tümünün seçimi
-            selectAllText: 'Herkesi seç!',
-            enableClickableOptGroups: true, //Departman altı gruplandırma
-            enableFiltering: true, //Arama aktif etme
-            enableCaseInsensitiveFiltering: true
-        })
-        
-        //$('#btnSave1').click(function () {
-        //    var list = $('#framework').val();
-        //    var a = [];
-        //    $.each($('#framework').val(), function (i, v) {
-        //        a.push(v);
-        //    });
-        //    alert(a);
-        //})
-        var i = 4;
-        $('#btnSaveTab').click(function () {
-
-            //var kisi = $('#framework2').val();            
-            if ($('#txtTabName').val().trim() == "") {
-                alert('Takvim kişisi seçiniz!');
-                return;
-            }
-            var y = '<li id="sby'+i+'"><a href="#tab'+i+'" ><input type="hidden" id="' + $('#framework2').val() + '" />' + $('#txtTabName').val() + '</a></li>';
-            var yDiv = '<div id="tab4"><div></div></div>';            
-            $('#tabs').append(yDiv);
-            $('#tabsUL').append(y);
-            i++;
-            $("#NewTabsPerson").modal("hide");
-            $('#tabs').tabs('refresh')
-
-        })
-        //$('#tabsUL').on('click', 'button', function (el) {
-        //    $(this).parent().remove()
-        //});
-    </script>
+    <script src="~/Scripts/planTabs.js"></script>    
 }

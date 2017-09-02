@@ -7,10 +7,7 @@ namespace SekreteryaRandevu.Models
 {
     public class getPlan
     {
-        public getPlan()
-        {
-            this.planToKisis = new HashSet<getKatilimci>();
-        }
+       
         public int planID { get; set; }
         public string planUzunBilgi { get; set; }
         public string planKisaBilgi { get; set; }
@@ -22,6 +19,6 @@ namespace SekreteryaRandevu.Models
         public string planEkBilgi { get; set; }
         public Nullable<int> planUserID { get; set; }
         public string planColor { get; set; }
-        public ICollection<getKatilimci> planToKisis { get; set; }
+        public List<getKatilimci> planToKisis { get; set; }
     }
 }
