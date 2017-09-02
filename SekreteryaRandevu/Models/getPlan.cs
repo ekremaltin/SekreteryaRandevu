@@ -7,6 +7,10 @@ namespace SekreteryaRandevu.Models
 {
     public class getPlan
     {
+        public getPlan()
+        {
+            this.planToKisis = new HashSet<getKatilimci>();
+        }
         public int planID { get; set; }
         public string planUzunBilgi { get; set; }
         public string planKisaBilgi { get; set; }

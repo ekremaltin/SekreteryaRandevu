@@ -73,6 +73,7 @@
     })
     $(document).on('click', '.btn-danger', function (e) {
         var btn_id = $(this).attr('id');
+        
         $('#row' + btn_id + '').remove();
 
     })

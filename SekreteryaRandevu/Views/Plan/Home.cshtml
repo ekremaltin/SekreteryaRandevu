@@ -1,8 +1,4 @@
-﻿<link href="~/Content/jquery-ui.css" rel="stylesheet" />
-<link href="~/Content/fullcalendar.css" rel="stylesheet" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
-
+﻿
 @{
     ViewBag.Title = "Takvim";
 }
@@ -10,6 +6,7 @@
 <h2>Randevu</h2>
 
 <div id="tabs">
+    <input type="hidden" id="tabID" value="0" />
     @*SEÇİLEN RANDEVU DETAY POP-UP*@
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -51,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <label>Başlık</label>
-                            <input type="text" id="txtSubject" class="form-control" placeholder="Başlık Giriniz"/>
+                            <input type="text" id="txtSubject" class="form-control" placeholder="Başlık Giriniz" />
                         </div>
                         <div class="form-group">
                             <label>Başlama Tarihi</label>
@@ -106,7 +103,7 @@
                             <select id="framework" name="framework[]" multiple="multiple" class="form-control">
                                 @foreach (var item in ViewBag.kisiListe)
                                 {
-                                    <option value=@item.Value>@item.Text</option>
+                                <option value=@item.Value>@item.Text</option>
                                 }
                             </select>
                         </div>
@@ -124,44 +121,89 @@
                         <button type="button" id="btnSave" class="btn btn-success">Kaydet</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
                     </form>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
     </div>
-    <ul>
-        <li><a href="#tab1" id="b">Başkan</a></li>
-        <li><a href="#tab2" id="by1">Başkan Yardımcısı</a></li>
-        <li><a href="#tab3" id="by2">Başkan Yardımcısı</a></li>
-        <li><a href="#tab4" id="by3">+</a></li>
+    <div id="NewTabsPerson" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Randevu Kayıt</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="col-md-12 form-horizontal">
+                        <input type="hidden" id="hdEventID" value="0" />
+                        <div class="form-group">
+                            <label></label>
+                            <select id="framework2" name="framework2[]" multiple="multiple" class="form-control">
+                                @foreach (var item in ViewBag.yonetimList)
+                                {
+                                    <option value=@item.Value >@item.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Başlık</label>
+                            <input type="text" id="txtTabName" class="form-control" placeholder="Başlık Giriniz" />
+                        </div>
+                        <button type="button" id="btnSaveTab" class="btn btn-success">Kaydet</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul id="tabsUL">
+        <li id="sb1" ><a href="#tab1"><input type="hidden" id="hdTabID" />Başkan</a></li>
+        <li id="sby2"><a href="#tab2" ><input type="hidden" id="hdTabID2" />Başkan Yardımcısı</a></li>
+        <li id="sby3"><a href="#tab3" ><input type="hidden" id="hdTabID3" />Başkan Yardımcısı</a></li>
+        <li id="btnTab" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab"><a class="ui-tabs-anchor">+</a></li>
     </ul>
     <div id="tab1">
         <div id="calendar"></div>
     </div>
-    <div id="tab2">
-        <div id="calendar"></div>
+    <div id="tab2"> 
+        tab2
     </div>
     <div id="tab3">
-        <div id="calendar"></div>
-    </div>
-    <div id="tab4">
-        <div id="calendar"></div>
+        tab3
     </div>
 </div>
-
+<input type="text" id="denee" value=""/>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
 
 
 @section Scripts{
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/fullcalendar.js"></script>
     <script src="~/Scripts/tr.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>    <script src="~/Scripts/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/ekFullCal.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <script>
         $('#tabs').tabs()
-        $('.ui - tabs - anchor').click(function () {
+        $('li[id=btnTab]').click(function () {
             var btn_id = $(this).attr('id');
-            $('#hdEventID').val(selectedEvent.eventID);
+            //$('#framework2').multiselect('select', []);
+            $('#txtTabName').val("");
+            $("#NewTabsPerson").modal("show");
+            //$('#hdEventID').val(selectedEvent.eventID);
+        })       
+        $(document).on('click', 'li[id^=sb]', function (e) {
+            var tabKisiID = $(this).children().children().attr('id');
+            FetchEventAndRenderCalendar(tabKisiID);
+            $('#denee').val(tabKisiID);
+
         })
         $('#framework').multiselect({
             nonSelectedText: 'Toplantıya Katımlımcı Ekleyiniz',
@@ -172,14 +214,43 @@
             enableFiltering: true, //Arama aktif etme
             enableCaseInsensitiveFiltering: true
         })
-        $('#btnSave1').click(function () {
-            var list = $('#framework').val();
-            var a = [];
-            $.each($('#framework').val(), function (i, v) {
-                a.push(v);
-            });
-            alert(a);
+        $('#framework2').multiselect({
+            nonSelectedText: 'Randevu Sistem Kişileri',
+            includeSelectAllOption: true, //Tüm seçim
+            selectAllJustVisible: false, //Görünmeyenlerinde tümünün seçimi
+            selectAllText: 'Herkesi seç!',
+            enableClickableOptGroups: true, //Departman altı gruplandırma
+            enableFiltering: true, //Arama aktif etme
+            enableCaseInsensitiveFiltering: true
         })
         
+        //$('#btnSave1').click(function () {
+        //    var list = $('#framework').val();
+        //    var a = [];
+        //    $.each($('#framework').val(), function (i, v) {
+        //        a.push(v);
+        //    });
+        //    alert(a);
+        //})
+        var i = 4;
+        $('#btnSaveTab').click(function () {
+
+            //var kisi = $('#framework2').val();            
+            if ($('#txtTabName').val().trim() == "") {
+                alert('Takvim kişisi seçiniz!');
+                return;
+            }
+            var y = '<li id="sby'+i+'"><a href="#tab'+i+'" ><input type="hidden" id="' + $('#framework2').val() + '" />' + $('#txtTabName').val() + '</a></li>';
+            var yDiv = '<div id="tab4"><div></div></div>';            
+            $('#tabs').append(yDiv);
+            $('#tabsUL').append(y);
+            i++;
+            $("#NewTabsPerson").modal("hide");
+            $('#tabs').tabs('refresh')
+
+        })
+        //$('#tabsUL').on('click', 'button', function (el) {
+        //    $(this).parent().remove()
+        //});
     </script>
 }

@@ -1,12 +1,14 @@
 ﻿$(document).ready(function () {
     var events = [];
-
-    FetchEventAndRenderCalendar();
-    function FetchEventAndRenderCalendar() {
+    
+    FetchEventAndRenderCalendar(1008);
+    function FetchEventAndRenderCalendar(id) {
         events = [];
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/Plan/GetEvents",
+            datatype:"json",
+            data: {'id': id},
             success: function (data) {
                 $.each(data, function (i, v) {
                     events.push({
@@ -125,7 +127,8 @@
                 success: function (data) {
                     if (data.status) {
                         //Refresh the calender
-                        FetchEventAndRenderCalendar();
+                        var tabKisiID = $(this).children().children().attr('id');
+                        FetchEventAndRenderCalendar(tabKisiID);
                         $('#myModal').modal('hide');
                     }
                 },
@@ -146,7 +149,6 @@
             $('#divEndDate').show();
         }
     });
-
     //$('#txtSearchKisi').autocomplete({
     //    source: function (request, response) {
     //        var kisiList = $("#txtSearchKisi");
@@ -170,7 +172,6 @@
     //        });
     //    }       
     //});
-
     $('#btnSave').click(function () {
         //Validation/
         if ($('#txtSubject').val().trim() == "") {
@@ -219,7 +220,6 @@
         SaveEvent(data);
         // call function for submit data to the server
     })
-
     function openAddEditForm() {
         if (selectedEvent != null) {
             //$('#kimForm').html(btn_id);
@@ -246,7 +246,8 @@
             success: function (data) {
                 if (data.status) {
                     //Refresh the calender
-                    FetchEventAndRenderCalendar();
+                    var tabKisiID = $(this).children().children().attr('id');
+                    FetchEventAndRenderCalendar(tabKisiID);
                     $('#myModalSave').modal('hide');
                 }
             },
