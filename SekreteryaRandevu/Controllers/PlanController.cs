@@ -13,9 +13,15 @@ namespace SekreteryaRandevu.Controllers
         // GET: Plan
         public ActionResult Home()
         {
-            ViewBag.kisiListe = new SelectList(db.kisis, "kisiID", "kisiAdi");
-            ViewBag.yonetimList = new SelectList(db.kisis.Where(m=>m.kisiUnvan.Contains("uzman")), "kisiID","kisiAdi");
-            return View();
+            if(Session["id"] != null)
+            {
+                int birimID = int.Parse(Session["birim"].ToString());
+                ViewBag.kisiListe = new SelectList(db.kisis, "kisiID", "kisiAdi");
+                ViewBag.yonetimList = new SelectList(db.kisis.Where(m => m.kisiUnvan.Contains("uzman")), "kisiID", "kisiAdi");
+                var takvimKisiler=db.kisis.Where(m => m.birimID == birimID && m.kisiUnvan.StartsWith("Başkan") && m.kisiYonetici == true).ToList();
+                return View(takvimKisiler);
+            }
+            return RedirectToAction("Login", "users");
         }
         
         [HttpPost]

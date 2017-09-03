@@ -1,6 +1,8 @@
-﻿
+﻿@model List<SekreteryaRandevu.Models.kisi>
 @{
     ViewBag.Title = "Takvim";
+    var yonetimList = ViewBag.yonetimList;
+    var kisiList = ViewBag.kisiListe;
 }
 
 <h2>Randevu</h2>
@@ -46,7 +48,7 @@
                         <div class="form-group">
                             <label>Randevu Sahipleri</label><br>
                             <select id="framework3" name="framework3[]" multiple="multiple" class="form-control">
-                                @foreach (var item in ViewBag.yonetimList)
+                                @foreach (var item in yonetimList)
                                 {
                                     <option value=@item.Value>@item.Text</option>
                                 }
@@ -107,7 +109,7 @@
                         <div class="form-group">
                             <label>Toplantı Katılımcıları</label><br>
                             <select id="framework" name="framework[]" multiple="multiple" class="form-control">
-                                @foreach (var item in ViewBag.kisiListe)
+                                @foreach (var item in kisiList)
                                 {
                                 <option value=@item.Value>@item.Text</option>
                                 }
@@ -145,9 +147,9 @@
                         <div class="form-group">
                             <label></label>
                             <select id="framework2" name="framework2[]" multiple="multiple" class="form-control">
-                                @foreach (var item in ViewBag.yonetimList)
+                                @foreach (var item in yonetimList)
                                 {
-                                    <option value=@item.Value >@item.Text</option>
+                                    <option value="@item.Value">@item.Text</option>
                                 }
                             </select>
                         </div>
@@ -165,9 +167,9 @@
     </div>
 
     <ul id="tabsUL">
-        <li id="sb1" ><a href="#tab1"><input type="hidden" id="22" />Başkan</a></li>
-        <li id="sby2"><a href="#tab2" ><input type="hidden" id="1026" />Başkan Yardımcısı</a></li>
-        <li id="sby3"><a href="#tab3" ><input type="hidden" id="22" />Başkan Yardımcısı</a></li>
+        <li id="sb1" ><a href="#tab1"><input type="hidden" id="@Model[0].kisiID" />@Model[0].kisiUnvan @Model[0].kisiAdi</a></li>
+        <li id="sby2"><a href="#tab2" ><input type="hidden" id="@Model[1].kisiID" />@Model[1].kisiUnvan @Model[1].kisiAdi </a></li>
+        <li id="sby3"><a href="#tab3" ><input type="hidden" id="@Model[2].kisiID" />@Model[2].kisiUnvan @Model[2].kisiAdi </a></li>
         <li id="btnTab" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab"><a class="ui-tabs-anchor">+</a></li>
     </ul>
     <div id="tab1">

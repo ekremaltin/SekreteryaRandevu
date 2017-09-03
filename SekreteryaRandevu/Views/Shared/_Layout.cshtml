@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -29,6 +29,18 @@
                     <li>@Html.ActionLink("Kişiler", "Liste", "Kisi")</li>
                     <li>@Html.ActionLink("Şirketler", "Liste", "Sirket")</li>
                     <li>@Html.ActionLink("Takvim", "Home", "Plan")</li>
+                    @if (Session["id"] == null){
+                        <li> @Html.ActionLink("Giriş", "Login", "users")</li>
+                    }
+                    @if (Session["id"] != null)
+                    {
+                        if ((Session["yetki"].ToString() == "3" || Session["yetki"].ToString() == "4"))
+                        {
+                            <li>@Html.ActionLink("Admin Paneli", "Index", "users")</li>
+
+                        }
+                        <li>@Html.ActionLink("Çıkış", "LogOut", "users")</li>
+                    }
                 </ul>
             </div>
         </div>

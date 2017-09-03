@@ -134,6 +134,7 @@
     <Compile Include="Controllers\KisiController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\SirketController.cs" />
+    <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -287,6 +288,12 @@
     <Content Include="Views\Sirket\Duzenle.cshtml" />
     <Content Include="Views\Sirket\Liste.cshtml" />
     <Content Include="Views\Plan\Home.cshtml" />
+    <Content Include="Views\users\Create.cshtml" />
+    <Content Include="Views\users\Delete.cshtml" />
+    <Content Include="Views\users\Details.cshtml" />
+    <Content Include="Views\users\Edit.cshtml" />
+    <Content Include="Views\users\Index.cshtml" />
+    <Content Include="Views\users\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

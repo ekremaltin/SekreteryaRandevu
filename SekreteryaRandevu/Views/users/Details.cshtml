@@ -1,0 +1,58 @@
+﻿@model SekreteryaRandevu.Models.user
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>user</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userAdSoyad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userAdSoyad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.birim.birimAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.birim.birimAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.yetkiLogin.yetki)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yetkiLogin.yetki)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.userID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

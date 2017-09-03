@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SekreteryaRandevu.Models.user>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userAdSoyad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.birim.birimAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.yetkiLogin.yetki)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userAdSoyad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.birim.birimAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.yetkiLogin.yetki)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.userID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.userID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.userID })
+        </td>
+    </tr>
+}
+
+</table>
